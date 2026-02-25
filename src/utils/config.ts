@@ -77,10 +77,26 @@ export const WIN_FIELD_INITIAL_TEXT = '0';
 export const WIN_FIELD_TEXT_Y_OFFSET = 50;
 export const WIN_FIELD_BOTTOM_OFFSET = 300;
 export const WIN_FIELD_HORIZONTAL_OFFSET = 750;
+export const WIN_FIELD_TEXT_COLOR = 0xffffff;
+
+// Feature view (free spins overlay) layout and styling
+export const FEATURE_VIEW_X_OFFSET = 740;
+export const FEATURE_BG_WIDTH = 370;
+export const FEATURE_BG_HEIGHT = 150;
+export const FEATURE_BG_RADIUS = 12;
+export const FEATURE_BG_ALPHA = 0.35;
+export const FEATURE_TITLE_Y_OFFSET = -40;
+export const FEATURE_COUNTER_Y_OFFSET = 20;
+export const FEATURE_TITLE_FONT_SIZE = 48;
+export const FEATURE_COUNTER_FONT_SIZE = 80;
+export const FEATURE_TITLE_COLOR = 0xfff176;
+export const FEATURE_COUNTER_COLOR = 0xffffff;
 
 // Symbol view fallback + win animation tuning
 export const SYMBOL_FALLBACK_CORNER_RADIUS = 16;
 export const SYMBOL_FALLBACK_FONT_SIZE = 20;
+export const SYMBOL_FALLBACK_BG_COLOR = 0x1f2937;
+export const SYMBOL_FALLBACK_TEXT_COLOR = 0xf9fafb;
 export const SYMBOL_WIN_ANIMATION_CONFIG = {
   duration: 0.25,
   shakeOffsetX: 3,

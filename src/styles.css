@@ -216,7 +216,7 @@ canvas {
 .btn-force.selected {
     background: var(--accent);
     border-color: var(--accent);
-    color: #38db83;;
+    color: #38db83;
 }
 
 @media (orientation: landscape) {

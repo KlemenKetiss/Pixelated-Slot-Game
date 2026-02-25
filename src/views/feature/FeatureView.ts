@@ -1,12 +1,22 @@
 import { Container, Graphics, Text } from 'pixi.js';
-import { GAME_WIDTH, GAME_HEIGHT } from '../../utils/config';
+import {
+  GAME_WIDTH,
+  GAME_HEIGHT,
+  FEATURE_VIEW_X_OFFSET,
+  FEATURE_BG_WIDTH,
+  FEATURE_BG_HEIGHT,
+  FEATURE_BG_RADIUS,
+  FEATURE_BG_ALPHA,
+  FEATURE_TITLE_Y_OFFSET,
+  FEATURE_COUNTER_Y_OFFSET,
+  FEATURE_TITLE_FONT_SIZE,
+  FEATURE_COUNTER_FONT_SIZE,
+  FEATURE_TITLE_COLOR,
+  FEATURE_COUNTER_COLOR,
+} from '../../utils/config';
 
-/** Width/height of the shadow background behind the free-spins text. */
-const FEATURE_BG_WIDTH = 370;
-const FEATURE_BG_HEIGHT = 150;
-const FEATURE_BG_RADIUS = 12;
-/** Mostly transparent dark fill for shadow. */
-const FEATURE_BG_FILL = { color: 0x000000, alpha: 0.35 };
+/** Mostly transparent dark fill for shadow background. */
+const FEATURE_BG_FILL = { color: 0x000000, alpha: FEATURE_BG_ALPHA };
 
 /**
  * Displays free spins feature status using the pixel font:
@@ -15,7 +25,7 @@ const FEATURE_BG_FILL = { color: 0x000000, alpha: 0.35 };
 export class FeatureView extends Container {
   private titleText!: Text;
   private counterText!: Text;
-  private readonly FEATURE_VIEW_X_OFFSET = 740;
+
   constructor() {
     super();
     this.initialize();
@@ -26,9 +36,9 @@ export class FeatureView extends Container {
     this.addChild(shadowBg);
 
     this.titleText = this.createTitleText();
-    this.titleText.y = -40;
+    this.titleText.y = FEATURE_TITLE_Y_OFFSET;
     this.counterText = this.createCounterText();
-    this.counterText.y = 20;
+    this.counterText.y = FEATURE_COUNTER_Y_OFFSET;
 
     shadowBg.addChild(this.titleText);
     shadowBg.addChild(this.counterText);
@@ -62,8 +72,8 @@ export class FeatureView extends Container {
       text: 'Free spins left:',
       style: {
         fontFamily: 'Pixelify Sans',
-        fontSize: 48,
-        fill: 0xfff176,
+        fontSize: FEATURE_TITLE_FONT_SIZE,
+        fill: FEATURE_TITLE_COLOR,
         align: 'center',
       },
     });
@@ -79,8 +89,8 @@ export class FeatureView extends Container {
       text: '',
       style: {
         fontFamily: 'Pixelify Sans',
-        fontSize: 80,
-        fill: 0xffffff,
+        fontSize: FEATURE_COUNTER_FONT_SIZE,
+        fill: FEATURE_COUNTER_COLOR,
         align: 'center',
       },
     });
@@ -92,7 +102,7 @@ export class FeatureView extends Container {
    * Positions the FeatureView near the top-center of the game area.
    */
   private positionFeatureView(): void {
-    this.x = GAME_WIDTH / 2 - this.FEATURE_VIEW_X_OFFSET;
+    this.x = GAME_WIDTH / 2 - FEATURE_VIEW_X_OFFSET;
     this.y = GAME_HEIGHT / 2;
   }
 

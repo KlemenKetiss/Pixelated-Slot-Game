@@ -5,6 +5,8 @@ import {
   SYMBOL_WIN_DIMMED_ALPHA,
   SYMBOL_FALLBACK_CORNER_RADIUS,
   SYMBOL_FALLBACK_FONT_SIZE,
+  SYMBOL_FALLBACK_BG_COLOR,
+  SYMBOL_FALLBACK_TEXT_COLOR,
   SYMBOL_WIN_ANIMATION_CONFIG,
 } from '../../utils/config';
 import gsap from 'gsap';
@@ -52,12 +54,12 @@ export class SymbolView extends Container {
             SYMBOL_HEIGHT,
             SYMBOL_FALLBACK_CORNER_RADIUS,
           )
-          .fill({ color: 0x1f2937 });
+          .fill({ color: SYMBOL_FALLBACK_BG_COLOR });
 
         const label = new Text({
           text: symbolName,
           style: {
-            fill: 0xf9fafb,
+            fill: SYMBOL_FALLBACK_TEXT_COLOR,
             fontSize: SYMBOL_FALLBACK_FONT_SIZE,
             fontFamily:
               'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',

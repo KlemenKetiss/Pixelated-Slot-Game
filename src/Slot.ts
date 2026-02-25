@@ -11,6 +11,11 @@ import {
   WINNING_WAYS_CONFIG,
   SYMBOL_PAYOUTS,
 } from './utils/config';
+import {
+  getFitScale,
+  resetLayoutStyles,
+  applyScaledCenteredLayout,
+} from './utils/ViewportLayout';
 import { MainView } from './views/MainView';
 import { PanelView } from './views/panel/PanelView';
 import { GameController } from './logic/GameController';
@@ -95,6 +100,33 @@ export class Slot {
             this.mainView.featureView.setFreeSpins(remaining);
           },
         );
+
+        window.addEventListener('resize', () => this.onResize());
+        this.onResize();
       });
+  }
+
+  private onResize(): void {
+    const container = document.getElementById('game-container');
+    if (!container) return;
+
+    this.updateGameContainerLayout(container as HTMLElement);
+  }
+
+  /**
+   * Scales and centers the game container (canvas + HTML UI) so it fits in the
+   * viewport and stays centered when the window is very wide or very short.
+   */
+  private updateGameContainerLayout(container: HTMLElement): void {
+    resetLayoutStyles(container);
+    const bounds = container.getBoundingClientRect();
+    const scale = getFitScale(
+      bounds.width,
+      bounds.height,
+      window.innerWidth,
+      window.innerHeight,
+      SLOT_RENDER_CONFIG.maxViewportScale
+    );
+    applyScaledCenteredLayout(container, scale);
   }
 }

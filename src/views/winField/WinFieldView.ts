@@ -7,6 +7,7 @@ import {
   WIN_FIELD_TEXT_Y_OFFSET,
   WIN_FIELD_BOTTOM_OFFSET,
   WIN_FIELD_HORIZONTAL_OFFSET,
+  WIN_FIELD_TEXT_COLOR,
 } from '../../utils/config';
 
 /**
@@ -32,7 +33,7 @@ export class WinFieldView extends Container {
       style: {
         fontFamily: 'Pixelify Sans',
         fontSize: WIN_FIELD_FONT_SIZE,
-        fill: 0xffffff,
+        fill: WIN_FIELD_TEXT_COLOR,
         align: 'center',
       },
     });
