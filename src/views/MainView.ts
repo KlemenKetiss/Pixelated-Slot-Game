@@ -1,18 +1,12 @@
 import { Container } from 'pixi.js';
-import {
-  GAME_HEIGHT,
-  GAME_WIDTH,
-  REELS_CONFIG,
-  SYMBOL_HEIGHT,
-  SYMBOL_WIDTH,
-  REEL_FRAME_INNER_PADDING_SCALE,
-  REELS_MAX_FIT_SCALE,
-} from '../utils/config';
-import { ReelsView } from './ReelsView';
-import { ReelFrame } from './ReelFrame';
-import { WinFieldView } from './WinFieldView';
-import { ReelSeparatorView } from './ReelSeparatorView';
-import { FeatureView } from './FeatureView';
+import { GAME_HEIGHT, GAME_WIDTH, REELS_CONFIG } from '../utils/config';
+import { ReelsView } from './reels/ReelsView';
+import { ReelFrame } from './reels/frame/ReelFrame';
+import { WinFieldView } from './winField/WinFieldView';
+import { ReelSeparatorView } from './reels/frame/ReelSeparatorView';
+import { FeatureView } from './feature/FeatureView';
+import { BackgroundView } from './background/BackgroundView';
+import { ReelsViewBackground } from './reels/frame/ReelsViewBackground';
 
 /**
  * Root Pixi container for the slot game scene.
@@ -24,46 +18,35 @@ export class MainView extends Container {
   public readonly winFieldView: WinFieldView;
   public readonly reelSeparators: ReelSeparatorView;
   public readonly featureView: FeatureView;
+  public readonly backgroundView: BackgroundView;
+  public readonly reelsViewBackground: ReelsViewBackground;
   constructor() {
     super();
-
+    this.backgroundView = new BackgroundView();
+    this.reelsViewBackground = new ReelsViewBackground();
     this.reelFrame = new ReelFrame();
     this.winFieldView = new WinFieldView();
     this.reelsView = new ReelsView();
     this.reelSeparators = new ReelSeparatorView(REELS_CONFIG.numReels - 1);
     this.featureView = new FeatureView();
     this.layoutReels();
-    // Draw frame behind reels, feature and WinField overlays near bottom, then reels
+    this.addChild(this.backgroundView);
+    this.addChild(this.reelsViewBackground);
     this.addChild(this.reelsView);
     this.addChild(this.reelSeparators);
     this.addChild(this.reelFrame);
     this.addChild(this.winFieldView);
     this.addChild(this.featureView);
+
   }
 
   private layoutReels(): void {
-    const { numReels, numRows, reelSpacing, symbolSpacing } = REELS_CONFIG;
-
-    const totalWidth =
-      numReels * SYMBOL_WIDTH + (numReels - 1) * reelSpacing;
-    const totalHeight =
-      numRows * SYMBOL_HEIGHT + (numRows - 1) * symbolSpacing;
-
-    // Compute available space inside the frame (small padding so reels don't touch the border).
-    const frameInnerWidth = this.reelFrame.width * REEL_FRAME_INNER_PADDING_SCALE;
-    const frameInnerHeight = this.reelFrame.height * REEL_FRAME_INNER_PADDING_SCALE;
-
-    const scaleX = frameInnerWidth / totalWidth;
-    const scaleY = frameInnerHeight / totalHeight;
-    const fitScale = Math.min(scaleX, scaleY, REELS_MAX_FIT_SCALE);
-
-    this.reelsView.scale.set(fitScale);
-
-    // Center reels within the game area (and thus within the frame).
-    this.reelsView.x = GAME_WIDTH / 2;
-    this.reelsView.y = GAME_HEIGHT / 2;
-
-    // Match separators to the reels view position and scale so they stay aligned.
+    this.reelsView.layoutWithinFrame(
+      this.reelFrame.width,
+      this.reelFrame.height,
+      GAME_WIDTH / 2,
+      GAME_HEIGHT / 2,
+    );
     this.reelSeparators.x = this.reelsView.x;
     this.reelSeparators.y = this.reelsView.y;
     this.reelSeparators.height = this.reelsView.height;

@@ -6,7 +6,7 @@ import {
   SYMBOL_FALLBACK_CORNER_RADIUS,
   SYMBOL_FALLBACK_FONT_SIZE,
   SYMBOL_WIN_ANIMATION_CONFIG,
-} from '../utils/config';
+} from '../../utils/config';
 import gsap from 'gsap';
 
 /**

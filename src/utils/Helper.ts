@@ -17,6 +17,13 @@ export class Helper {
     return FORCE_STOP_SETS[index];
   }
 
+  /**
+   * Computes scale so that reels (totalWidth x totalHeight) fit inside the given container.
+   * @param layout Reel grid dimensions and spacing.
+   * @param containerWidth Available width (e.g. game or frame inner width).
+   * @param containerHeight Available height (e.g. game or frame inner height).
+   * @param maxScale Optional cap for the scale (e.g. REELS_MAX_FIT_SCALE).
+   */
   public static computeReelsFitScale(
     layout: ReelsLayoutParams = {
       numReels: REELS_CONFIG.numReels,
@@ -26,8 +33,9 @@ export class Helper {
       reelSpacing: REELS_CONFIG.reelSpacing,
       symbolSpacing: REELS_CONFIG.symbolSpacing,
     },
-    gameWidth: number = GAME_WIDTH,
-    gameHeight: number = GAME_HEIGHT,
+    containerWidth: number = GAME_WIDTH,
+    containerHeight: number = GAME_HEIGHT,
+    maxScale?: number,
   ): number {
     const totalWidth =
       layout.numReels * layout.reelWidth +
@@ -36,7 +44,10 @@ export class Helper {
       layout.numRows * layout.symbolHeight +
       (layout.numRows - 1) * layout.symbolSpacing;
 
-    return Math.min(gameWidth / totalWidth, gameHeight / totalHeight);
+    const scaleX = containerWidth / totalWidth;
+    const scaleY = containerHeight / totalHeight;
+    const fitScale = Math.min(scaleX, scaleY);
+    return maxScale != null ? Math.min(fitScale, maxScale) : fitScale;
   }
 }
 

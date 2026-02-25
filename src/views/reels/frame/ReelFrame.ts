@@ -4,7 +4,7 @@ import {
   GAME_HEIGHT,
   REEL_FRAME_Y_OFFSET,
   REEL_FRAME_SCALE,
-} from '../utils/config';
+} from '../../../utils/config';
 
 export class ReelFrame extends Container {
   protected frameSprite!: Sprite;

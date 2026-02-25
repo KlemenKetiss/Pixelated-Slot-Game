@@ -58,6 +58,14 @@
         {
           "alias": "SpinButton",
           "src": "./assets/images/SpinButton.png"
+        },
+        {
+          "alias": "ReelFrameBackground",
+          "src": "./assets/images/ReelFrameBackground.png"
+        },
+        {
+          "alias": "Background",
+          "src": "./assets/images/Background.png"
         }
       ]
     }

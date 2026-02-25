@@ -7,7 +7,7 @@ import {
   WIN_FIELD_TEXT_Y_OFFSET,
   WIN_FIELD_BOTTOM_OFFSET,
   WIN_FIELD_HORIZONTAL_OFFSET,
-} from '../utils/config';
+} from '../../utils/config';
 
 /**
  * Pixi container that draws the WinField.png and the win amount using

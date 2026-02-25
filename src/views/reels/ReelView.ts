@@ -2,11 +2,11 @@ import { Container } from 'pixi.js';
 import { SymbolView } from './SymbolView';
 import type { ReelsView } from './ReelsView';
 import gsap from 'gsap';
-import { REEL_ANIMATION_CONFIG, REELS_CONFIG } from '../utils/config';
+import { REEL_ANIMATION_CONFIG, REELS_CONFIG } from '../../utils/config';
 import {
   DefaultSymbolGenerator,
   type SymbolGenerator,
-} from '../utils/SymbolGenerator';
+} from '../../utils/SymbolGenerator';
 
 interface ReelViewOptions {
   symbolHeight: number;

@@ -12,7 +12,7 @@ import {
   SYMBOL_PAYOUTS,
 } from './utils/config';
 import { MainView } from './views/MainView';
-import { PanelView } from './views/PanelView';
+import { PanelView } from './views/panel/PanelView';
 import { GameController } from './logic/GameController';
 import type { GameConfig } from './logic/GameTypes';
 

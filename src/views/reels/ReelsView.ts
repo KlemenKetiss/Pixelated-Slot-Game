@@ -1,8 +1,14 @@
 import { Container, Graphics } from 'pixi.js';
 import { ReelView } from './ReelView';
-import { DefaultSymbolGenerator } from '../utils/SymbolGenerator';
-import { GAME_HEIGHT, GAME_WIDTH, REELS_CONFIG } from '../utils/config';
-import { Helper } from '../utils/Helper';
+import { DefaultSymbolGenerator } from '../../utils/SymbolGenerator';
+import {
+  GAME_HEIGHT,
+  GAME_WIDTH,
+  REELS_CONFIG,
+  REEL_FRAME_INNER_PADDING_SCALE,
+  REELS_MAX_FIT_SCALE,
+} from '../../utils/config';
+import { Helper } from '../../utils/Helper';
 
 export enum GameMode {
   NORMAL = 'NORMAL',
@@ -116,6 +122,37 @@ export class ReelsView extends Container {
 
     // Apply initial global scale from config/options (desktop by default)
     this.scale.set(this.options.scale);
+  }
+
+  /**
+   * Layout reels to fit inside a frame and center at the given point.
+   * Uses frame inner padding and max scale from config. Call after add to stage when frame size is known.
+   */
+  public layoutWithinFrame(
+    frameWidth: number,
+    frameHeight: number,
+    centerX: number = GAME_WIDTH / 2,
+    centerY: number = GAME_HEIGHT / 2,
+  ): void {
+    const layout = {
+      numReels: this.options.numReels,
+      numRows: this.options.numRows,
+      reelWidth: this.options.reelWidth,
+      symbolHeight: this.options.symbolHeight,
+      reelSpacing: this.options.reelSpacing,
+      symbolSpacing: REELS_CONFIG.symbolSpacing,
+    };
+    const frameInnerWidth = frameWidth * REEL_FRAME_INNER_PADDING_SCALE;
+    const frameInnerHeight = frameHeight * REEL_FRAME_INNER_PADDING_SCALE;
+    const fitScale = Helper.computeReelsFitScale(
+      layout,
+      frameInnerWidth,
+      frameInnerHeight,
+      REELS_MAX_FIT_SCALE,
+    );
+    this.scale.set(fitScale);
+    this.x = centerX;
+    this.y = centerY;
   }
 
   private createMask(): void {

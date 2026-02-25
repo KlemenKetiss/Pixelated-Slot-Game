@@ -5,7 +5,7 @@ import {
   REEL_SEPARATOR_X_OFFSET,
   REEL_SEPARATOR_Y_OFFSET,
   SEPERATOR_START_OFFSET,
-} from '../utils/config';
+} from '../../../utils/config';
 
 /**
  * Displays a row of vertical ReelSeparator sprites, spaced apart by symbol width.

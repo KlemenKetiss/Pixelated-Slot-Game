@@ -1,4 +1,4 @@
-import { BET_HOLD_DELAY_MS, BET_HOLD_REPEAT_INTERVAL_MS } from '../utils/config';
+import { BET_HOLD_DELAY_MS, BET_HOLD_REPEAT_INTERVAL_MS } from '../../utils/config';
 /**
  * DOM-based panel view: binds to HTML elements and exposes events/callbacks for the game controller.
  * No Pixi.js; all UI is HTML/CSS.
