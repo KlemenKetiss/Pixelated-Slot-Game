@@ -52,6 +52,15 @@ export class Slot {
           console.error('Failed to load assets bundle:', error);
         }
 
+        // Ensure the pixel font is loaded before we render Pixi Text that uses it.
+        try {
+          // This relies on the @font-face in styles.css pointing at the TTF.
+          await document.fonts.load('32px "Pixelify Sans"');
+          console.log('Pixelify Sans font loaded successfully');
+        } catch (error) {
+          console.error('Failed to load Pixelify Sans font:', error);
+        }
+
         // Create and attach the main view (reels etc.).
         this.mainView = new MainView();
         this.app.stage.addChild(this.mainView);
@@ -138,13 +147,7 @@ export class Slot {
       this.gameConfig,
     );
 
-    // Update Win field in UI
-    const winDisplay = document.getElementById('win-display');
-    if (winDisplay) {
-      winDisplay.textContent = `Win: ${totalWinCredits} €`;
-    }
-
-    // Update credits/bet display
+    // Update credits/bet + win display
     this.updatePanelUi(totalWinCredits);
 
     // Play symbol win animations
@@ -180,8 +183,14 @@ export class Slot {
 
     if (latestWin === undefined) return;
     const winDisplay = document.getElementById('win-display');
+    const formatted = this.formatAmount(latestWin);
     if (winDisplay) {
-      winDisplay.textContent = `Win: ${this.formatAmount(latestWin)} €`;
+      winDisplay.textContent = `Win: ${formatted} €`;
+    }
+
+    // Also update Pixi WinField text with the pixel font.
+    if (this.mainView) {
+      this.mainView.winFieldView.setWinText(formatted);
     }
   }
 

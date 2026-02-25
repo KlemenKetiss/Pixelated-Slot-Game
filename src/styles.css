@@ -1,3 +1,11 @@
+@font-face {
+    font-family: 'Pixelify Sans';
+    src: url('../assets/Fonts/PixelifySans-Bold.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
 :root {
     --bg-primary: #0f0f12;
     --bg-secondary: #1a1a20;
@@ -24,7 +32,7 @@ body {
     min-height: 100vh;
     background: var(--bg-primary);
     color: var(--text-primary);
-    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    font-family: 'Pixelify Sans', system-ui, -apple-system, sans-serif;
     display: flex;
     justify-content: center;
     align-items: center;

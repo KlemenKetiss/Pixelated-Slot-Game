@@ -6,6 +6,10 @@ export const GAME_HEIGHT = 1080;
 export const SYMBOL_WIDTH = 160;
 export const SYMBOL_HEIGHT = 160;
 
+// Reel frame layout and scaling
+export const REEL_FRAME_Y_OFFSET = 10;
+export const REEL_FRAME_SCALE = 1.1;
+
 export const REELS_CONFIG = {
   numReels: 3,
   numRows: 3,
@@ -18,6 +22,10 @@ export const REELS_CONFIG = {
   bonusSymbolThreshold: 3,
   maskColor: 0xffffff,
 };
+
+// Reels layout tuning inside the frame
+export const REEL_FRAME_INNER_PADDING_SCALE = 0.98;
+export const REELS_MAX_FIT_SCALE = 1.7;
 
 export const REEL_ANIMATION_CONFIG = {
   virtualReelLength: 20,
@@ -49,6 +57,21 @@ export const WINNING_WAYS_CONFIG = {
 
 export const SYMBOL_WIN_DIMMED_ALPHA = 0.5;
 export const INITIAL_WIN = 0;
+
+// Win field (Pixi overlay) layout and typography
+export const WIN_FIELD_FONT_SIZE = 120;
+export const WIN_FIELD_INITIAL_TEXT = '0';
+export const WIN_FIELD_TEXT_Y_OFFSET = 50;
+export const WIN_FIELD_BOTTOM_OFFSET = 300;
+export const WIN_FIELD_HORIZONTAL_OFFSET = 750;
+
+// Symbol view fallback + win animation tuning
+export const SYMBOL_FALLBACK_CORNER_RADIUS = 16;
+export const SYMBOL_FALLBACK_FONT_SIZE = 20;
+export const SYMBOL_WIN_ANIMATION_CONFIG = {
+  duration: 0.25,
+  shakeOffsetX: 3,
+};
 
 // Symbol set tailored for a compact 3x3 game; aliases should match asset names.
 // LOW3 (Cherry), LOW2 (Lemon), LOW1 (Plum), HIGH4 (Bell),

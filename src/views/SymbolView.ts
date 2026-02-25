@@ -1,5 +1,12 @@
 import { Sprite, Assets, Container, Graphics, Text } from 'pixi.js';
-import { SYMBOL_HEIGHT, SYMBOL_WIDTH, SYMBOL_WIN_DIMMED_ALPHA } from '../utils/config';
+import {
+  SYMBOL_HEIGHT,
+  SYMBOL_WIDTH,
+  SYMBOL_WIN_DIMMED_ALPHA,
+  SYMBOL_FALLBACK_CORNER_RADIUS,
+  SYMBOL_FALLBACK_FONT_SIZE,
+  SYMBOL_WIN_ANIMATION_CONFIG,
+} from '../utils/config';
 import gsap from 'gsap';
 
 /**
@@ -38,14 +45,20 @@ export class SymbolView extends Container {
       } else {
         // Fallback debug tile when texture is missing.
         const tile = new Graphics()
-          .roundRect(0, 0, SYMBOL_WIDTH, SYMBOL_HEIGHT, 16)
+          .roundRect(
+            0,
+            0,
+            SYMBOL_WIDTH,
+            SYMBOL_HEIGHT,
+            SYMBOL_FALLBACK_CORNER_RADIUS,
+          )
           .fill({ color: 0x1f2937 });
 
         const label = new Text({
           text: symbolName,
           style: {
             fill: 0xf9fafb,
-            fontSize: 20,
+            fontSize: SYMBOL_FALLBACK_FONT_SIZE,
             fontFamily:
               'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
           },
@@ -87,13 +100,13 @@ export class SymbolView extends Container {
     if (this.symbolTexture) {
       this.resetWinAnimation();
       this.winTween = gsap.to(this.symbolTexture, {
-        duration: 0.25,
+        duration: SYMBOL_WIN_ANIMATION_CONFIG.duration,
         repeat: -1,
         yoyo: true,
         ease: 'sine.inOut',
         scaleX: 1,
         scaleY: 1,
-        x: this.symbolTexture.x + 3,
+        x: this.symbolTexture.x + SYMBOL_WIN_ANIMATION_CONFIG.shakeOffsetX,
       });
     }
   }

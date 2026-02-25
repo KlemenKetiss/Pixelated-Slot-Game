@@ -1,7 +1,16 @@
 import { Container } from 'pixi.js';
-import { GAME_HEIGHT, GAME_WIDTH, REELS_CONFIG, SYMBOL_HEIGHT, SYMBOL_WIDTH } from '../utils/config';
+import {
+  GAME_HEIGHT,
+  GAME_WIDTH,
+  REELS_CONFIG,
+  SYMBOL_HEIGHT,
+  SYMBOL_WIDTH,
+  REEL_FRAME_INNER_PADDING_SCALE,
+  REELS_MAX_FIT_SCALE,
+} from '../utils/config';
 import { ReelsView } from './ReelsView';
 import { ReelFrame } from './ReelFrame';
+import { WinFieldView } from './WinFieldView';
 
 /**
  * Root Pixi container for the slot game scene.
@@ -10,15 +19,18 @@ import { ReelFrame } from './ReelFrame';
 export class MainView extends Container {
   public readonly reelsView: ReelsView;
   public readonly reelFrame: ReelFrame;
+  public readonly winFieldView: WinFieldView;
   constructor() {
     super();
 
     this.reelFrame = new ReelFrame();
+    this.winFieldView = new WinFieldView();
     this.reelsView = new ReelsView();
     this.layoutReels();
-    // Draw frame behind reels
-    this.addChild(this.reelFrame);
+    // Draw frame behind reels, WinField overlay near bottom, then reels
     this.addChild(this.reelsView);
+    this.addChild(this.reelFrame);
+    this.addChild(this.winFieldView);
   }
 
   private layoutReels(): void {
@@ -30,12 +42,12 @@ export class MainView extends Container {
       numRows * SYMBOL_HEIGHT + (numRows - 1) * symbolSpacing;
 
     // Compute available space inside the frame (small padding so reels don't touch the border).
-    const frameInnerWidth = this.reelFrame.width * 0.98;
-    const frameInnerHeight = this.reelFrame.height * 0.98;
+    const frameInnerWidth = this.reelFrame.width * REEL_FRAME_INNER_PADDING_SCALE;
+    const frameInnerHeight = this.reelFrame.height * REEL_FRAME_INNER_PADDING_SCALE;
 
     const scaleX = frameInnerWidth / totalWidth;
     const scaleY = frameInnerHeight / totalHeight;
-    const fitScale = Math.min(scaleX, scaleY, 1.7);
+    const fitScale = Math.min(scaleX, scaleY, REELS_MAX_FIT_SCALE);
 
     this.reelsView.scale.set(fitScale);
 
