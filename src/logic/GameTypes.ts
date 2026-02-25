@@ -5,7 +5,6 @@ export interface PanelPort {
   setBetButtonsEnabled(canDecrease: boolean, canIncrease: boolean): void;
   setSpinEnabled(enabled: boolean): void;
   setForceSelected(index: number | null): void;
-
   onSpinRequested(callback: () => void): void;
   onForceOutcome(callback: (index: number) => void): void;
   onBetChange(callback: (direction: 'up' | 'down') => void): void;
@@ -16,6 +15,7 @@ export interface ReelsPort {
   getStops(): string[][];
   playWinAnimations(reel: number, row: number): void;
   checkBonusCondition(): void;
+  clearWinAnimations(): void;
   getNumberOfReels(): number;
   /** Optional externally forced stops for debug / scripted spins. */
   forceStops: string[][];
@@ -76,6 +76,8 @@ export interface GameState {
   spinActive: boolean;
   selectedForceIndex: number | null;
   betIndex: number;
+  freeSpinsActive: boolean;
+  freeSpinsLeft: number;
 }
 
 export type GameEvent =
@@ -83,59 +85,5 @@ export type GameEvent =
   | { type: 'SPIN_CONCLUDED'; totalWin: number }
   | { type: 'FORCE_SELECTED'; index: number }
   | { type: 'BET_UP' }
-  | { type: 'BET_DOWN' };
-
-function getSpinCost(state: GameState, config: GameConfig): number {
-  const clampedIndex = Math.max(0, Math.min(state.betIndex, config.betLevels.length - 1));
-  return config.betLevels[clampedIndex] ?? 0;
-}
-
-export function reduceGameState(
-  state: GameState,
-  event: GameEvent,
-  config: GameConfig,
-): GameState {
-  switch (event.type) {
-    case 'SPIN_REQUESTED': {
-      const spinCost = getSpinCost(state, config);
-      if (state.spinActive || state.balance < spinCost) {
-        return state;
-      }
-      return {
-        ...state,
-        spinActive: true,
-        balance: state.balance - spinCost,
-      };
-    }
-    case 'SPIN_CONCLUDED': {
-      return {
-        ...state,
-        spinActive: false,
-        balance: state.balance + event.totalWin,
-        selectedForceIndex: null,
-      };
-    }
-    case 'FORCE_SELECTED': {
-      return {
-        ...state,
-        selectedForceIndex:
-          state.selectedForceIndex === event.index ? null : event.index,
-      };
-    }
-    case 'BET_UP': {
-      if (state.spinActive || state.betIndex >= config.betLevels.length - 1) {
-        return state;
-      }
-      return { ...state, betIndex: state.betIndex + 1 };
-    }
-    case 'BET_DOWN': {
-      if (state.spinActive || state.betIndex <= 0) {
-        return state;
-      }
-      return { ...state, betIndex: state.betIndex - 1 };
-    }
-    default:
-      return state;
-  }
-}
-
+  | { type: 'BET_DOWN' }
+  | { type: 'FREE_SPINS_AWARDED'; count: number };

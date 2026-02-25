@@ -130,10 +130,17 @@ export class PanelView {
   }
 
   setBalance(value: number): void {
-    this.balanceEl.textContent = `Credits: ${value} €`;
+    const formatted = this.formatAmount(value);
+    this.balanceEl.textContent = `Credits: ${formatted} €`;
   }
 
   setWin(value: number): void {
+    if (value === 0) {
+      // Don't show a numeric win when it's zero; keep label and clear Pixi text.
+      this.winEl.textContent = 'Win:';
+      this.onWinDisplay?.('');
+      return;
+    }
     const formatted = this.formatAmount(value);
     this.winEl.textContent = `Win: ${formatted} €`;
     this.onWinDisplay?.(formatted);

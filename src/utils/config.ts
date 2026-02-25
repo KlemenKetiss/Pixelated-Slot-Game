@@ -51,6 +51,10 @@ export const DEFAULT_BET_INDEX = 2; // 1 credit
 export const BET_HOLD_DELAY_MS = 350;
 export const BET_HOLD_REPEAT_INTERVAL_MS = 120;
 
+// Free spins feature configuration
+export const FREE_SPINS_INITIAL_AWARD = 10;
+export const FREE_SPINS_RETRIGGER_AWARD = 3;
+
 export const SLOT_RENDER_CONFIG = {
   backgroundColor: 0x0c0f1a,
   maxViewportScale: 1,

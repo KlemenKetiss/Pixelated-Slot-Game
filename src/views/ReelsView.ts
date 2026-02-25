@@ -150,13 +150,30 @@ export class ReelsView extends Container {
     const stops: string[][] = [];
     const symbolGenerator = new DefaultSymbolGenerator();
 
-    for (let i = 0; i < this.options.numReels; i++) {
-      const row: string[] = [];
-      for (let j = 0; j < this.options.numRows; j++) {
-        row.push(symbolGenerator.getRandomSymbol());
+    for (let reelIndex = 0; reelIndex < this.options.numReels; reelIndex++) {
+      const column: string[] = [];
+      let bonusUsed = false;
+
+      for (let rowIndex = 0; rowIndex < this.options.numRows; rowIndex++) {
+        let symbol = symbolGenerator.getRandomSymbol();
+
+        if (symbol === 'Bonus' && bonusUsed) {
+          // Re-roll until we get a non-Bonus symbol for this reel.
+          while (symbol === 'Bonus') {
+            symbol = symbolGenerator.getRandomSymbol();
+          }
+        }
+
+        if (symbol === 'Bonus') {
+          bonusUsed = true;
+        }
+
+        column.push(symbol);
       }
-      stops.push(row);
+
+      stops.push(column);
     }
+
     return stops;
   }
 
@@ -179,7 +196,7 @@ export class ReelsView extends Container {
     let bonusCount = 0;
     this.stops.forEach((reel) => {
       reel.forEach((symbol) => {
-        if (symbol === 'BONUS') {
+        if (symbol === 'Bonus') {
           bonusCount++;
         }
       });

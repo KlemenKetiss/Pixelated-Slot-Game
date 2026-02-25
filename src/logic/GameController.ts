@@ -1,6 +1,11 @@
 import type { PanelPort, ReelsPort, GameConfig, GameState } from './GameTypes';
-import { reduceGameState } from './GameTypes';
+import { handleGameState } from './GameStateHandler';
 import { checkForWinningWays } from './WinLogic';
+import {
+  FREE_SPINS_INITIAL_AWARD,
+  FREE_SPINS_RETRIGGER_AWARD,
+  REELS_CONFIG,
+} from '../utils/config';
 
 export class GameController {
   private state: GameState;
@@ -9,18 +14,22 @@ export class GameController {
     private readonly panel: PanelPort,
     private readonly reels: ReelsPort,
     private readonly config: GameConfig,
+    private readonly onFreeSpinsChange?: (remaining: number) => void,
   ) {
     this.state = {
       balance: config.initialBalance,
       spinActive: false,
       selectedForceIndex: null,
       betIndex: config.defaultBetIndex,
+      freeSpinsActive: false,
+      freeSpinsLeft: 0,
     };
     this.panel.setBalance(this.state.balance);
     this.panel.setWin(this.config.initialWin);
     this.panel.setBet(this.getCurrentBet());
     this.updateBetButtonsEnabled();
     this.updateSpinEnabled();
+    this.updateFeatureView();
     this.wirePanel();
     this.wireReels();
   }
@@ -46,8 +55,10 @@ export class GameController {
   }
 
   private updateSpinEnabled(): void {
+    const hasFreeSpin = this.state.freeSpinsActive && this.state.freeSpinsLeft > 0;
     const canAffordCurrentBet = this.state.balance >= this.getCurrentBet();
-    const canSpin = !this.state.spinActive && canAffordCurrentBet;
+    const canSpin =
+      !this.state.spinActive && (hasFreeSpin || canAffordCurrentBet);
     this.panel.setSpinEnabled(canSpin);
   }
 
@@ -62,7 +73,7 @@ export class GameController {
   }
 
   private handleSpinRequested(): void {
-    const nextState = reduceGameState(
+    const nextState = handleGameState(
       this.state,
       { type: 'SPIN_REQUESTED' },
       this.config,
@@ -76,6 +87,7 @@ export class GameController {
     this.panel.setBet(this.getCurrentBet());
     this.updateBetButtonsEnabled();
     this.updateSpinEnabled();
+    this.updateFeatureView();
 
     const forceStops =
       this.state.selectedForceIndex !== null
@@ -86,7 +98,7 @@ export class GameController {
   }
 
   private handleForceOutcome(index: number): void {
-    const nextState = reduceGameState(
+    const nextState = handleGameState(
       this.state,
       { type: 'FORCE_SELECTED', index },
       this.config,
@@ -103,9 +115,13 @@ export class GameController {
       direction === 'up'
         ? { type: 'BET_UP' as const }
         : { type: 'BET_DOWN' as const };
-    const nextState = reduceGameState(this.state, event, this.config);
+    const nextState = handleGameState(this.state, event, this.config);
     if (nextState === this.state) return;
     this.state = nextState;
+
+    // Any time the bet changes, clear existing win animations.
+    this.reels.clearWinAnimations();
+
     this.panel.setBet(this.getCurrentBet());
     this.updateBetButtonsEnabled();
     this.updateSpinEnabled();
@@ -117,22 +133,53 @@ export class GameController {
     const bet = this.getCurrentBet();
     const totalWin = baseWin * bet;
 
-    this.handleBonusCondition();
+    this.handleBonusCondition(stops);
     this.updateGameStateOnSpinConcluded(totalWin);
+    this.checkIfFreeSpinsEnded();
     this.updatePanelState(totalWin);
-    this._clearForceStops();
+    this.updateFeatureView();
+    this.clearForceStops();
     this.animateWins(wins);
   }
 
-  private handleBonusCondition(): void {
+  private checkIfFreeSpinsEnded(): void {
+    if (this.state.freeSpinsLeft <= 0) {
+      this.state = { ...this.state, freeSpinsActive: false, freeSpinsLeft: 0 };
+    }
+  }
+
+  private handleBonusCondition(stops: string[][]): void {
+    // Update reels GameMode / logging.
     this.reels.checkBonusCondition();
+
+    // Count bonus symbols in the current stops grid.
+    let bonusCount = 0;
+    stops.forEach((reel) => {
+      reel.forEach((symbol) => {
+        if (symbol === 'Bonus') {
+          bonusCount++;
+        }
+      });
+    });
+
+    if (bonusCount < REELS_CONFIG.bonusSymbolThreshold) return;
+
+    const award = this.state.freeSpinsActive
+      ? FREE_SPINS_RETRIGGER_AWARD
+      : FREE_SPINS_INITIAL_AWARD;
+
+    this.state = handleGameState(
+      this.state,
+      { type: 'FREE_SPINS_AWARDED', count: award },
+      this.config,
+    );
   }
 
   private updateGameStateOnSpinConcluded(totalWin: number): void {
-    const nextState = reduceGameState(
+    const nextState = handleGameState(
       this.state,
       { type: 'SPIN_CONCLUDED', totalWin },
-      this.config
+      this.config,
     );
     this.state = nextState;
   }
@@ -146,7 +193,14 @@ export class GameController {
     this.panel.setForceSelected(this.state.selectedForceIndex);
   }
 
-  private _clearForceStops(): void {
+  private updateFeatureView(): void {
+    if (!this.onFreeSpinsChange) return;
+    const { freeSpinsActive, freeSpinsLeft } = this.state;
+    const remaining = freeSpinsActive ? freeSpinsLeft : -1;
+    this.onFreeSpinsChange(remaining);
+  }
+
+  private clearForceStops(): void {
     this.reels.forceStops = [];
   }
 

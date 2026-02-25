@@ -83,6 +83,9 @@ export class Slot {
           this.panelView,
           this.mainView.reelsView,
           gameConfig,
+          (remaining) => {
+            this.mainView.featureView.setFreeSpins(remaining);
+          },
         );
       });
   }

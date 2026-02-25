@@ -12,6 +12,7 @@ import { ReelsView } from './ReelsView';
 import { ReelFrame } from './ReelFrame';
 import { WinFieldView } from './WinFieldView';
 import { ReelSeparatorView } from './ReelSeparatorView';
+import { FeatureView } from './FeatureView';
 
 /**
  * Root Pixi container for the slot game scene.
@@ -22,6 +23,7 @@ export class MainView extends Container {
   public readonly reelFrame: ReelFrame;
   public readonly winFieldView: WinFieldView;
   public readonly reelSeparators: ReelSeparatorView;
+  public readonly featureView: FeatureView;
   constructor() {
     super();
 
@@ -29,12 +31,14 @@ export class MainView extends Container {
     this.winFieldView = new WinFieldView();
     this.reelsView = new ReelsView();
     this.reelSeparators = new ReelSeparatorView(REELS_CONFIG.numReels - 1);
+    this.featureView = new FeatureView();
     this.layoutReels();
-    // Draw frame behind reels, WinField overlay near bottom, then reels
+    // Draw frame behind reels, feature and WinField overlays near bottom, then reels
     this.addChild(this.reelsView);
     this.addChild(this.reelSeparators);
     this.addChild(this.reelFrame);
     this.addChild(this.winFieldView);
+    this.addChild(this.featureView);
   }
 
   private layoutReels(): void {
