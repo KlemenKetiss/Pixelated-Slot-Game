@@ -10,7 +10,7 @@
     "test:watch": "vitest"
   },
   "staticFiles": {
-    "staticPath": "Assets",
+    "staticPath": "assets",
     "staticOutPath": "assets"
   },
   "keywords": [],

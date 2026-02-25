@@ -24,6 +24,12 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Ensure assets folder for static copy (Linux case-sensitivity)
+        run: |
+          if [ -d "Assets" ] && [ ! -d "assets" ]; then
+            cp -r Assets assets
+          fi
+
       - name: Build
         run: npm run build
 
