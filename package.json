@@ -1,0 +1,44 @@
+{
+  "name": "pixelated-slot-game",
+  "version": "1.0.0",
+  "description": "Pixelated slot game using Pixi.js and Typescript.",
+  "scripts": {
+    "start": "parcel src/index.html",
+    "build": "parcel build src/index.html",
+    "deploy": "gh-pages -d dist",
+    "test": "jest",
+    "test:watch": "jest --watch"
+  },
+  "staticFiles": {
+    "staticPath": "assets",
+    "staticOutPath": "assets"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@parcel/transformer-typescript-tsc": "^2.13.3",
+    "@types/node": "^20.11.5",
+    "@typescript-eslint/eslint-plugin": "^8.56.1",
+    "@typescript-eslint/parser": "^8.56.1",
+    "eslint": "^10.0.1",
+    "gh-pages": "^6.3.0",
+    "parcel": "^2.13.3",
+    "parcel-reporter-static-files-copy": "^1.5.3",
+    "typescript": "^5.3.3",
+    "jest": "^29.7.0",
+    "ts-jest": "^29.2.0",
+    "@types/jest": "^29.5.0"
+  },
+  "source": "src/index.html",
+  "targets": {
+    "default": {
+      "publicUrl": "./"
+    }
+  },
+  "dependencies": {
+    "gsap": "^3.12.7",
+    "pixi.js": "^8.6.6"
+  }
+}
+

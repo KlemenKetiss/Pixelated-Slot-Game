@@ -1,0 +1,18 @@
+{
+  "bundles": [
+    {
+      "name": "game-bundle",
+      "assets": [
+        {
+          "alias": "symbol1",
+          "src": "./assets/images/symbol1.png"
+        },
+        {
+          "alias": "symbol2",
+          "src": "./assets/images/symbol2.png"
+        }
+      ]
+    }
+  ]
+}
+
