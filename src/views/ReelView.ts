@@ -47,10 +47,10 @@ export class ReelView extends Container {
     this.symbolGenerator = symbolGenerator;
     this.virtualReelContainer = new Container();
     this.stopsReel = new Container();
-    this.initialize(this.options.numRows);
+    this.initializeReel(this.options.numRows);
   }
 
-  private initialize(numRows: number): void {
+  protected initializeReel(numRows: number): void {
     for (let i = 0; i < numRows; i++) {
       const symbolView = new SymbolView(this.symbolGenerator.getRandomSymbol());
       symbolView.y = i * (this.options.symbolHeight + this.options.symbolSpacing);

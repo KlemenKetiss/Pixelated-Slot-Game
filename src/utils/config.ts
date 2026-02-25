@@ -15,7 +15,7 @@ export const REELS_CONFIG = {
   numRows: 3,
   reelWidth: SYMBOL_WIDTH,
   symbolHeight: SYMBOL_HEIGHT,
-  reelSpacing: 12,
+  reelSpacing: 20,
   symbolSpacing: 8,
   yOffset: 80,
   screenWidth: GAME_WIDTH,
@@ -26,6 +26,11 @@ export const REELS_CONFIG = {
 // Reels layout tuning inside the frame
 export const REEL_FRAME_INNER_PADDING_SCALE = 0.98;
 export const REELS_MAX_FIT_SCALE = 1.7;
+
+// Reel separators layout (between reels)
+export const REEL_SEPARATOR_X_OFFSET = 130;
+export const REEL_SEPARATOR_Y_OFFSET = -30;
+export const SEPERATOR_START_OFFSET = 0;
 
 export const REEL_ANIMATION_CONFIG = {
   virtualReelLength: 20,

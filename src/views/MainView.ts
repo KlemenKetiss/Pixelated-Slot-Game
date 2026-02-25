@@ -11,6 +11,7 @@ import {
 import { ReelsView } from './ReelsView';
 import { ReelFrame } from './ReelFrame';
 import { WinFieldView } from './WinFieldView';
+import { ReelSeparatorView } from './ReelSeparatorView';
 
 /**
  * Root Pixi container for the slot game scene.
@@ -20,15 +21,18 @@ export class MainView extends Container {
   public readonly reelsView: ReelsView;
   public readonly reelFrame: ReelFrame;
   public readonly winFieldView: WinFieldView;
+  public readonly reelSeparators: ReelSeparatorView;
   constructor() {
     super();
 
     this.reelFrame = new ReelFrame();
     this.winFieldView = new WinFieldView();
     this.reelsView = new ReelsView();
+    this.reelSeparators = new ReelSeparatorView(REELS_CONFIG.numReels - 1);
     this.layoutReels();
     // Draw frame behind reels, WinField overlay near bottom, then reels
     this.addChild(this.reelsView);
+    this.addChild(this.reelSeparators);
     this.addChild(this.reelFrame);
     this.addChild(this.winFieldView);
   }
@@ -54,6 +58,11 @@ export class MainView extends Container {
     // Center reels within the game area (and thus within the frame).
     this.reelsView.x = GAME_WIDTH / 2;
     this.reelsView.y = GAME_HEIGHT / 2;
+
+    // Match separators to the reels view position and scale so they stay aligned.
+    this.reelSeparators.x = this.reelsView.x;
+    this.reelSeparators.y = this.reelsView.y;
+    this.reelSeparators.height = this.reelsView.height;
   }
 }
 

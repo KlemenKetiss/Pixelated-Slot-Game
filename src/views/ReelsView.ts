@@ -28,7 +28,7 @@ interface ReelsViewOptions {
  */
 export class ReelsView extends Container {
   private reelViews: ReelView[] = [];
-  private options: ReelsViewOptions;
+  private options!: ReelsViewOptions;
   public mask!: Graphics;
   public stops!: Array<Array<string>>;
   public forceStops: Array<Array<string>> = [];
@@ -36,7 +36,11 @@ export class ReelsView extends Container {
 
   constructor(options: Partial<ReelsViewOptions> = {}) {
     super();
+    this.initialize(options);
+    this.initializeReels();
+  }
 
+  protected initialize(options: Partial<ReelsViewOptions> = {}): void {
     const numReels = options.numReels ?? REELS_CONFIG.numReels;
     const numRows = options.numRows ?? REELS_CONFIG.numRows;
     const reelWidth = options.reelWidth ?? REELS_CONFIG.reelWidth;
@@ -74,11 +78,9 @@ export class ReelsView extends Container {
         this.forceStops.length > 0 ? this.forceStops : this.generateStops();
       this.spin();
     });
-
-    this.initialize();
   }
 
-  private initialize(): void {
+  protected initializeReels(): void {
     this.stops = [];
     const symbolGenerator = new DefaultSymbolGenerator();
 

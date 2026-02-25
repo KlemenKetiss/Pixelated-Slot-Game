@@ -7,10 +7,14 @@ import {
 } from '../utils/config';
 
 export class ReelFrame extends Container {
-  private frameSprite: Sprite;
+  protected frameSprite!: Sprite;
 
   constructor() {
     super();
+    this.initializeFrame();
+  }
+
+  protected initializeFrame(): void {
     // Load the frame asset synchronously, assuming it was preloaded
     const frameTexture = Assets.get('ReelFrame');
     this.frameSprite = new Sprite(frameTexture);

@@ -104,8 +104,7 @@ export class SymbolView extends Container {
         repeat: -1,
         yoyo: true,
         ease: 'sine.inOut',
-        scaleX: 1,
-        scaleY: 1,
+        alpha: SYMBOL_WIN_DIMMED_ALPHA,
         x: this.symbolTexture.x + SYMBOL_WIN_ANIMATION_CONFIG.shakeOffsetX,
       });
     }
