@@ -47,6 +47,10 @@ export const PANEL_CONFIG = {
 export const BET_LEVELS: number[] = [0.2, 0.5, 1, 2, 5, 10, 20];
 export const DEFAULT_BET_INDEX = 2; // 1 credit
 
+// After a short delay, start repeating while held.
+export const BET_HOLD_DELAY_MS = 350;
+export const BET_HOLD_REPEAT_INTERVAL_MS = 120;
+
 export const SLOT_RENDER_CONFIG = {
   backgroundColor: 0x0c0f1a,
   maxViewportScale: 1,
@@ -97,9 +101,9 @@ export const SYMBOLS: string[] = [
 export const FORCE_STOP_SETS: Array<Array<Array<string>>> = [
   // High win: strong Seven / high symbol connections
   [
-    ['HIGH1', 'HIGH3', 'HIGH1'],
-    ['HIGH1', 'HIGH4', 'HIGH1'],
-    ['HIGH2', 'HIGH1', 'HIGH2'],
+    ['HIGH1', 'WILD', 'HIGH1'],
+    ['HIGH1', 'HIGH1', 'WILD'],
+    ['HIGH1', 'HIGH1', 'WILD'],
   ],
   // Bonus trigger (3 BONUS on screen)
   [
@@ -109,9 +113,9 @@ export const FORCE_STOP_SETS: Array<Array<Array<string>>> = [
   ],
   // Mixed mid wins: combinations of lows and highs
   [
-    ['LOW3', 'LOW3', 'LOW3'],
-    ['HIGH3', 'LOW2', 'HIGH3'],
-    ['LOW1', 'HIGH2', 'LOW1'],
+    ['LOW3', 'LOW3', 'HIGH3'],
+    ['HIGH3', 'LOW3', 'HIGH3'],
+    ['LOW3', 'HIGH3', 'LOW3'],
   ],
 ];
 
