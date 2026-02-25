@@ -241,8 +241,6 @@ export class ReelsView extends Container {
 
     if (bonusCount >= REELS_CONFIG.bonusSymbolThreshold) {
       this.setGameMode(GameMode.BONUS);
-      // eslint-disable-next-line no-console
-      console.log('Entering BONUS mode!');
     } else {
       this.setGameMode(GameMode.NORMAL);
     }
