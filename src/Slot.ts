@@ -38,10 +38,31 @@ export class Slot {
           console.error('Failed to load assets bundle:', error);
         }
 
-        // Create and attach the main view (reels etc.). Views use Assets.get(...)
-        // just like in the original simpleSlot project.
+        // Create and attach the main view (reels etc.).
         this.mainView = new MainView();
         this.app.stage.addChild(this.mainView);
+
+        this.wireUi();
       });
+  }
+
+  /** Wires HTML controls to the reels logic. */
+  private wireUi(): void {
+    const spinBtn = document.getElementById('spin-btn') as HTMLButtonElement | null;
+    if (!spinBtn || !this.mainView) return;
+
+    const reelsView = this.mainView.reelsView;
+
+    const handleSpinClick = () => {
+      // Prevent spamming while a spin is in progress.
+      spinBtn.disabled = true;
+      reelsView.emit('spinButtonClicked');
+    };
+
+    spinBtn.addEventListener('click', handleSpinClick);
+
+    reelsView.on('spinConcluded', () => {
+      spinBtn.disabled = false;
+    });
   }
 }

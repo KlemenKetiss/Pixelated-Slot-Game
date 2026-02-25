@@ -1,6 +1,6 @@
 // Core game dimensions (square-ish for 3x3, good for mobile & desktop)
-export const GAME_WIDTH = 600;
-export const GAME_HEIGHT = 600;
+export const GAME_WIDTH = 1920;
+export const GAME_HEIGHT = 1080;
 
 // Symbol and reel layout for a 3x3 grid
 export const SYMBOL_WIDTH = 160;
