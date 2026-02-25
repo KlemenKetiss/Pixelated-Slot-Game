@@ -3,17 +3,35 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pixelated Slot Game</title>
+    <title>Slot Game</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div id="game-container">
-        <!-- Pixi canvas will be injected here -->
+        <!-- Pixi canvas is injected here as the first child by Slot.ts -->
         <aside id="ui-overlay" class="ui-overlay">
-            <!-- UI for the slot game will go here -->
+            <div class="ui-top-row">
+                <div class="ui-stat-group">
+                    <div class="ui-stat" id="balance-display">Credits: 1000 €</div>
+                    <div class="bet-control">
+                        <button type="button" class="btn btn-bet" id="bet-decrease" aria-label="Decrease bet">−</button>
+                        <span class="ui-stat" id="bet-display">Bet: 10 €</span>
+                        <button type="button" class="btn btn-bet" id="bet-increase" aria-label="Increase bet">+</button>
+                    </div>
+                    <div class="ui-stat" id="win-display">Win: 0 €</div>
+                </div>
+                <button type="button" class="btn btn-spin" id="spin-btn">SPIN</button>
+            </div>
+            <section class="force-outcomes">
+                <span class="force-outcomes-label">Force outcomes:</span>
+                <div class="force-buttons">
+                    <button type="button" class="btn btn-force" data-force-index="0">High win</button>
+                    <button type="button" class="btn btn-force" data-force-index="1">Bonus</button>
+                    <button type="button" class="btn btn-force" data-force-index="2">Mixed win</button>
+                </div>
+            </section>
         </aside>
     </div>
     <script type="module" src="index.ts"></script>
 </body>
 </html>
-

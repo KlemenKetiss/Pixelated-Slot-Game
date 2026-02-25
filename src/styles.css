@@ -1,38 +1,288 @@
+:root {
+    --bg-primary: #0f0f12;
+    --bg-secondary: #1a1a20;
+    --bg-elevated: #24242b;
+    --border: #2e2e38;
+    --text-primary: #e8e8ed;
+    --text-muted: #9a9aa8;
+    --accent: #6366f1;
+    --accent-hover: #818cf8;
+    --accent-active: #4f46e5;
+    --radius: 10px;
+    --shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+}
+
 * {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-
-html,
-body {
-  width: 100%;
-  height: 100%;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
 }
 
 body {
-  background-color: #111;
-  color: #fff;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+canvas {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
 }
 
 #game-container {
-  position: relative;
-  width: 100%;
-  max-width: 1050px;
-  height: 100%;
-  max-height: 600px;
-  display: flex;
-  align-items: stretch;
-  justify-content: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    width: 100%;
+    max-width: min(80vw, 80vh * (16 / 9));
+    padding: 0rem;
+    box-sizing: border-box;
+}
+
+#bet-display {
+    /* Reserve space for up to "Bet: 100 €" so width stays stable */
+    min-width: 10ch;
+    white-space: nowrap;
+    display: inline-block;
+    text-align: center;
 }
 
 .ui-overlay {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
+    /* Make the UI panel wider than the game canvas container */
+    width: min(90vw, 900px);
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
 }
 
+.ui-top-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    width: 100%;
+    padding: 0.75rem 0.9rem;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+}
+
+.ui-stat-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    align-items: center;
+}
+
+.ui-stat {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.btn {
+    font-family: inherit;
+    font-size: 1.25rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    border: none;
+    border-radius: var(--radius);
+    cursor: pointer;
+    transition: background-color 0.15s, transform 0.1s, opacity 0.15s;
+}
+
+.btn:active {
+    transform: scale(0.98);
+}
+
+.btn-spin {
+    flex-shrink: 0;
+    padding: 0.75rem 2.5rem;
+    background: var(--accent);
+    color: white;
+    box-shadow: 0 4px 14px rgba(99, 102, 241, 0.35);
+}
+
+.btn-spin:hover:not(:disabled) {
+    background: var(--accent-hover);
+}
+
+.btn-spin:active:not(:disabled) {
+    background: var(--accent-active);
+}
+
+.btn-spin:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.bet-control {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.btn-bet {
+    min-width: 2rem;
+    padding: 0.35rem 0.5rem;
+    font-size: 1.25rem;
+    line-height: 1;
+    background: var(--bg-elevated);
+    color: var(--text-primary);
+    border: 1px solid var(--border);
+}
+
+.btn-bet:hover:not(:disabled) {
+    background: var(--border);
+}
+
+.btn-bet:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.force-outcomes {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.75rem 0.9rem;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+}
+
+.force-outcomes-label {
+    font-size: 0.9375rem;
+    font-weight: 500;
+    color: var(--text-muted);
+}
+
+.force-buttons {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.btn-force {
+    padding: 0.5rem 1rem;
+    font-size: 0.9375rem;
+    font-weight: 600;
+    background: var(--bg-elevated);
+    color: var(--text-primary);
+    border: 1px solid var(--border);
+}
+
+.btn-force:hover {
+    background: var(--border);
+    color: var(--text-primary);
+}
+
+.btn-force:active {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: white;
+}
+
+.btn-force.selected {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: white;
+}
+
+@media (orientation: landscape) {
+    /* In landscape, keep a fixed gap after the Win: display */
+    #win-display {
+        margin-right: 50px;
+    }
+}
+
+@media (orientation: portrait), (max-width: 600px) {
+    body {
+        align-items: center;
+        font-size: 14px;
+    }
+
+    .ui-overlay {
+        width: 100%;
+    }
+
+    #game-container {
+        max-width: 100vw;
+        max-height: 70vh;
+        padding-top: max(0.75rem, env(safe-area-inset-top, 0px));
+        padding-bottom: max(0.75rem, env(safe-area-inset-bottom, 0px));
+        padding-left: max(0.5rem, env(safe-area-inset-left, 0px));
+        padding-right: max(0.5rem, env(safe-area-inset-right, 0px));
+    }
+
+    .ui-top-row {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0.75rem;
+    }
+
+    .ui-stat-group {
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 0.75rem;
+    }
+
+    /* On portrait / small width, force Win: onto its own (second) row */
+    #win-display {
+        flex-basis: 100%;
+    }
+
+    .ui-stat {
+        font-size: 1rem;
+    }
+
+    .btn-spin {
+        width: 100%;
+        text-align: center;
+    }
+
+    .force-outcomes {
+        align-items: flex-start;
+    }
+
+    .force-outcomes-label {
+        flex-basis: 100%;
+    }
+
+    .force-buttons {
+        width: 100%;
+    }
+
+    .btn {
+        min-height: 44px;
+        font-size: 1.1rem;
+    }
+
+    .btn-force {
+        flex: 1 1 auto;
+        text-align: center;
+        font-size: 0.95rem;
+    }
+}
+
+/* When layout gets narrow and SPIN wraps to a second row, let it span the row */
+@media (max-width: 900px) {
+    .ui-top-row .btn-spin {
+        width: 100%;
+    }
+}

@@ -32,8 +32,32 @@
           "src": "./assets/images/Seven.png"
         },
         {
-          "alias": "BONUS",
+          "alias": "Bonus",
           "src": "./assets/images/Bonus.png"
+        },
+        {
+          "alias": "WILD",
+          "src": "./assets/images/Wild.png"
+        },
+        {
+          "alias": "BetField",
+          "src": "./assets/images/BetField.png"
+        },
+        {
+          "alias": "WinField",
+          "src": "./assets/images/WinField.png"
+        },
+        {
+          "alias": "ReelFrame",
+          "src": "./assets/images/ReelFrame.png"
+        },
+        {
+          "alias": "ReelSeperator",
+          "src": "./assets/images/ReelSeperator.png"
+        },
+        {
+          "alias": "SpinButton",
+          "src": "./assets/images/SpinButton.png"
         }
       ]
     }

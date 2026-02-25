@@ -1,6 +1,6 @@
 // Core game dimensions (square-ish for 3x3, good for mobile & desktop)
-export const GAME_WIDTH = 900;
-export const GAME_HEIGHT = 900;
+export const GAME_WIDTH = 600;
+export const GAME_HEIGHT = 600;
 
 // Symbol and reel layout for a 3x3 grid
 export const SYMBOL_WIDTH = 160;
@@ -52,7 +52,7 @@ export const INITIAL_WIN = 0;
 
 // Symbol set tailored for a compact 3x3 game; aliases should match asset names.
 // LOW3 (Cherry), LOW2 (Lemon), LOW1 (Plum), HIGH4 (Bell),
-// HIGH3 (Diamond), HIGH2 (Bar), HIGH1 (Seven)
+// HIGH3 (Diamond), HIGH2 (Bar), HIGH1 (Seven), WILD (Wild)
 export const SYMBOLS: string[] = [
   'LOW3',  // Cherry
   'LOW2',  // Lemon
@@ -61,7 +61,8 @@ export const SYMBOLS: string[] = [
   'HIGH3', // Diamond
   'HIGH2', // Bar
   'HIGH1', // Seven
-  'BONUS', // Bonus / feature symbol
+  'WILD',  // Wild
+  'Bonus', // Bonus / feature symbol
 ];
 
 // Example forced outcomes for dev/debug (placeholder, can be tuned later).
@@ -74,9 +75,9 @@ export const FORCE_STOP_SETS: Array<Array<Array<string>>> = [
   ],
   // Bonus trigger (3 BONUS on screen)
   [
-    ['BONUS', 'LOW3', 'HIGH2'],
-    ['LOW2', 'BONUS', 'HIGH3'],
-    ['HIGH4', 'LOW1', 'BONUS'],
+    ['Bonus', 'LOW3', 'HIGH2'],
+    ['LOW2', 'Bonus', 'HIGH3'],
+    ['HIGH4', 'LOW1', 'Bonus'],
   ],
   // Mixed mid wins: combinations of lows and highs
   [
@@ -95,6 +96,7 @@ export const SYMBOL_PAYOUTS: { [key: string]: { [matches: number]: number } } = 
   HIGH3: { 3: 10, 4: 20, 5: 35 }, // Diamond
   HIGH2: { 3: 15, 4: 30, 5: 50 }, // Bar
   HIGH1: { 3: 25, 4: 50, 5: 100 }, // Seven
+  WILD: { 3: 30, 4: 60, 5: 150 }, // Wild
   BONUS: { 3: 0, 4: 0, 5: 0 }, // Feature handled separately
 };
 
