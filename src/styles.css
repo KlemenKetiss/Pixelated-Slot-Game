@@ -13,12 +13,19 @@
     --border: #2e2e38;
     --text-primary: #e8e8ed;
     --text-muted: #9a9aa8;
-    --accent: #6366f1;
-    --accent-hover: #818cf8;
-    --accent-active: #4f46e5;
+    --accent: #14266b;
+    --accent-hover: #1e317c;
+    --accent-active: #131f50;
     --radius: 10px;
     --shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
 }
+
+/*
+#14266b (Blue)
+#38db83 (Dark Blue)
+#131f50 (Green)
+#46ffe4 (Border)
+*/
 
 * {
     box-sizing: border-box;
@@ -120,7 +127,7 @@ canvas {
     flex-shrink: 0;
     padding: 0.75rem 2.5rem;
     background: var(--accent);
-    color: white;
+    color: #38db83;
     box-shadow: 0 4px 14px rgba(99, 102, 241, 0.35);
 }
 
@@ -209,7 +216,7 @@ canvas {
 .btn-force.selected {
     background: var(--accent);
     border-color: var(--accent);
-    color: white;
+    color: #38db83;;
 }
 
 @media (orientation: landscape) {

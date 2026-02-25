@@ -68,7 +68,7 @@ export class GameController {
       this.config,
     );
     if (nextState === this.state) {
-      return;
+      return; //This doesn't really happen because the spin is requested only when the button is clicked
     }
 
     this.state = nextState;
@@ -113,30 +113,44 @@ export class GameController {
 
   private handleSpinConcluded(): void {
     const stops = this.reels.getStops();
-    const { wins, totalWin: baseWin } = checkForWinningWays(
-      stops,
-      this.config,
-    );
+    const { wins, totalWin: baseWin } = checkForWinningWays(stops, this.config);
     const bet = this.getCurrentBet();
     const totalWin = baseWin * bet;
 
-    this.reels.checkBonusCondition();
+    this.handleBonusCondition();
+    this.updateGameStateOnSpinConcluded(totalWin);
+    this.updatePanelState(totalWin);
+    this._clearForceStops();
+    this.animateWins(wins);
+  }
 
+  private handleBonusCondition(): void {
+    this.reels.checkBonusCondition();
+  }
+
+  private updateGameStateOnSpinConcluded(totalWin: number): void {
     const nextState = reduceGameState(
       this.state,
       { type: 'SPIN_CONCLUDED', totalWin },
-      this.config,
+      this.config
     );
     this.state = nextState;
+  }
 
+  private updatePanelState(totalWin: number): void {
     this.panel.setWin(totalWin);
     this.panel.setBalance(this.state.balance);
     this.panel.setBet(this.getCurrentBet());
     this.updateBetButtonsEnabled();
     this.updateSpinEnabled();
-    this.reels.forceStops = [];
     this.panel.setForceSelected(this.state.selectedForceIndex);
+  }
 
+  private _clearForceStops(): void {
+    this.reels.forceStops = [];
+  }
+
+  private animateWins(wins: Array<{ positions: Array<{ reel: number; row: number }> }>): void {
     wins.forEach((win) => {
       win.positions.forEach((pos) => {
         this.reels.playWinAnimations(pos.reel, pos.row);
