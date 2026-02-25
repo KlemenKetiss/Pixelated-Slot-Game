@@ -1,5 +1,6 @@
 import { Sprite, Assets, Container, Graphics, Text } from 'pixi.js';
 import { SYMBOL_HEIGHT, SYMBOL_WIDTH, SYMBOL_WIN_DIMMED_ALPHA } from '../utils/config';
+import gsap from 'gsap';
 
 /**
  * Single symbol that uses only the base texture from the manifest.
@@ -8,6 +9,9 @@ import { SYMBOL_HEIGHT, SYMBOL_WIDTH, SYMBOL_WIN_DIMMED_ALPHA } from '../utils/c
 export class SymbolView extends Container {
   private _symbolName: string = '';
   private symbolTexture!: Sprite;
+  private winTween?: gsap.core.Tween;
+  private baseScaleX = 1;
+  private baseScaleY = 1;
 
   constructor(symbolName: string) {
     super();
@@ -20,10 +24,17 @@ export class SymbolView extends Container {
       const baseTexture = Assets.get(symbolName);
       if (baseTexture) {
         this.symbolTexture = new Sprite(baseTexture);
+        this.symbolTexture.anchor.set(0.5);
         this.symbolTexture.width = SYMBOL_WIDTH;
         this.symbolTexture.height = SYMBOL_HEIGHT;
         this.symbolTexture.alpha = 1;
         this.addChild(this.symbolTexture);
+        // Center sprite within its container
+        this.symbolTexture.x = SYMBOL_WIDTH / 2;
+        this.symbolTexture.y = SYMBOL_HEIGHT / 2;
+        // Remember the natural scale after sizing, so we can restore it later.
+        this.baseScaleX = this.symbolTexture.scale.x;
+        this.baseScaleY = this.symbolTexture.scale.y;
       } else {
         // Fallback debug tile when texture is missing.
         const tile = new Graphics()
@@ -52,6 +63,7 @@ export class SymbolView extends Container {
   }
 
   public dispose(disposeOfItself = false): void {
+    this.resetWinAnimation();
     this.removeChildren();
 
     if (this.symbolTexture) {
@@ -68,10 +80,37 @@ export class SymbolView extends Container {
     this.initialize(newSymbolName);
   }
 
-  /** Simple win effect: dim the base symbol. */
+  /**
+   * Simple win effect: pulse scale between 0.8 and 1.2 with a slight shake.
+   */
   public playWinAnimation(): void {
     if (this.symbolTexture) {
-      this.symbolTexture.alpha = SYMBOL_WIN_DIMMED_ALPHA;
+      this.resetWinAnimation();
+      this.winTween = gsap.to(this.symbolTexture, {
+        duration: 0.25,
+        repeat: -1,
+        yoyo: true,
+        ease: 'sine.inOut',
+        scaleX: 1,
+        scaleY: 1,
+        x: this.symbolTexture.x + 3,
+      });
+    }
+  }
+
+  /**
+   * Clears any active win tween and restores default appearance.
+   */
+  public resetWinAnimation(): void {
+    if (this.winTween) {
+      this.winTween.kill();
+      this.winTween = undefined;
+    }
+    if (this.symbolTexture) {
+      this.symbolTexture.alpha = 1;
+      this.symbolTexture.scale.set(this.baseScaleX, this.baseScaleY);
+      this.symbolTexture.x = SYMBOL_WIDTH / 2;
+      this.symbolTexture.y = SYMBOL_HEIGHT / 2;
     }
   }
 

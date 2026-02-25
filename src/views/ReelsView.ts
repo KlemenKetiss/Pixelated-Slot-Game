@@ -69,6 +69,7 @@ export class ReelsView extends Container {
     };
 
     this.on('spinButtonClicked', () => {
+      this.clearWinAnimations();
       this.stops =
         this.forceStops.length > 0 ? this.forceStops : this.generateStops();
       this.spin();
@@ -163,6 +164,13 @@ export class ReelsView extends Container {
     if (symbolView) {
       symbolView.playWinAnimation();
     }
+  }
+
+  /** Clears any active win animations on all symbols. */
+  public clearWinAnimations(): void {
+    this.reelViews.forEach((reelView) => {
+      reelView.clearWinAnimations();
+    });
   }
 
   public checkBonusCondition(): void {

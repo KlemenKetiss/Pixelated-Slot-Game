@@ -190,5 +190,15 @@ export class ReelView extends Container {
     this.symbols = [];
     this.removeChildren();
   }
+
+  /** Reset any win animations on symbols in this reel. */
+  public clearWinAnimations(): void {
+    // Reset on all symbol instances that might still be around.
+    [...this.symbols, ...this.virtualSymbols, ...this.stops].forEach(
+      (symbol) => {
+        symbol.resetWinAnimation();
+      },
+    );
+  }
 }
 
