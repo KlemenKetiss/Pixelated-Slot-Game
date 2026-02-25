@@ -4,8 +4,11 @@
 - **Symbols:** Low (Cherry, Lemon, Plum), mid (Bell, Diamond, Bar), high (Seven), Wild, and Bonus. Payouts and symbols are defined in `src/utils/config.ts`.
 - **Free spins:** Landing 3 Bonus symbols triggers free spins. Wins during free spins don’t deduct balance.
 - **Force outcomes (dev):** Buttons let you force a result: High win, Bonus trigger, Mixed win, or No win. Used for testing and demos.
+# Base game
+<img width="857" height="596" alt="image" src="https://github.com/user-attachments/assets/c4d7ed6a-e1ab-40e4-af5b-bf05f1c93655" />
 
-![Game screenshot](https://github.com/user-attachments/assets/2f4422c3-67b8-49dd-940c-de9893be620a)
+# Free Spins
+<img width="922" height="647" alt="image" src="https://github.com/user-attachments/assets/5f3ae93f-e556-4118-8dbd-b58c70e195e0" />
 
 ---
 
