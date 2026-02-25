@@ -39,8 +39,16 @@ export class Slot {
           document.body.appendChild(this.app.canvas);
         }
 
+        const assetsBase =
+          window.location.origin +
+          window.location.pathname.replace(/\/[^/]*$/, '') +
+          '/assets/';
+
         try {
-          await Assets.init({ manifest: './assets/manifest.json' });
+          await Assets.init({
+            basePath: assetsBase,
+            manifest: assetsBase + 'manifest.json',
+          });
           console.log('Assets manifest loaded successfully');
         } catch (error) {
           console.error('Failed to load assets manifest:', error);

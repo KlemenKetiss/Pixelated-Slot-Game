@@ -5,67 +5,67 @@
       "assets": [
         {
           "alias": "LOW3",
-          "src": "./assets/images/Cherry.png"
+          "src": "./images/Cherry.png"
         },
         {
           "alias": "LOW2",
-          "src": "./assets/images/Lemon.png"
+          "src": "./images/Lemon.png"
         },
         {
           "alias": "LOW1",
-          "src": "./assets/images/Plum.png"
+          "src": "./images/Plum.png"
         },
         {
           "alias": "HIGH4",
-          "src": "./assets/images/Bell.png"
+          "src": "./images/Bell.png"
         },
         {
           "alias": "HIGH3",
-          "src": "./assets/images/Diamond.png"
+          "src": "./images/Diamond.png"
         },
         {
           "alias": "HIGH2",
-          "src": "./assets/images/Bar.png"
+          "src": "./images/Bar.png"
         },
         {
           "alias": "HIGH1",
-          "src": "./assets/images/Seven.png"
+          "src": "./images/Seven.png"
         },
         {
           "alias": "Bonus",
-          "src": "./assets/images/Bonus.png"
+          "src": "./images/Bonus.png"
         },
         {
           "alias": "WILD",
-          "src": "./assets/images/Wild.png"
+          "src": "./images/Wild.png"
         },
         {
           "alias": "BetField",
-          "src": "./assets/images/BetField.png"
+          "src": "./images/BetField.png"
         },
         {
           "alias": "WinField",
-          "src": "./assets/images/WinField.png"
+          "src": "./images/WinField.png"
         },
         {
           "alias": "ReelFrame",
-          "src": "./assets/images/ReelFrame.png"
+          "src": "./images/ReelFrame.png"
         },
         {
           "alias": "ReelSeperator",
-          "src": "./assets/images/ReelSeperator.png"
+          "src": "./images/ReelSeperator.png"
         },
         {
           "alias": "SpinButton",
-          "src": "./assets/images/SpinButton.png"
+          "src": "./images/SpinButton.png"
         },
         {
           "alias": "ReelFrameBackground",
-          "src": "./assets/images/ReelFrameBackground.png"
+          "src": "./images/ReelFrameBackground.png"
         },
         {
           "alias": "Background",
-          "src": "./assets/images/Background.png"
+          "src": "./images/Background.png"
         }
       ]
     }
