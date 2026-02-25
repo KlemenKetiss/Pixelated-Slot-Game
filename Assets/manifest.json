@@ -4,15 +4,38 @@
       "name": "game-bundle",
       "assets": [
         {
-          "alias": "symbol1",
-          "src": "./assets/images/symbol1.png"
+          "alias": "LOW3",
+          "src": "./assets/images/Cherry.png"
         },
         {
-          "alias": "symbol2",
-          "src": "./assets/images/symbol2.png"
+          "alias": "LOW2",
+          "src": "./assets/images/Lemon.png"
+        },
+        {
+          "alias": "LOW1",
+          "src": "./assets/images/Plum.png"
+        },
+        {
+          "alias": "HIGH4",
+          "src": "./assets/images/Bell.png"
+        },
+        {
+          "alias": "HIGH3",
+          "src": "./assets/images/Diamond.png"
+        },
+        {
+          "alias": "HIGH2",
+          "src": "./assets/images/Bar.png"
+        },
+        {
+          "alias": "HIGH1",
+          "src": "./assets/images/Seven.png"
+        },
+        {
+          "alias": "BONUS",
+          "src": "./assets/images/Bonus.png"
         }
       ]
     }
   ]
 }
-

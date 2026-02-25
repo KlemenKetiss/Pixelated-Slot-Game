@@ -66,7 +66,7 @@ export interface GameConfig {
   };
   /**
    * Payouts per symbol and number of matches.
-   * Example: symbolPayouts['A'][3] = 10 (10× bet per way for 3-of-a-kind A's).
+   * Example: symbolPayouts['SEVEN'][3] = 10 (10× bet per way for 3-of-a-kind SEVEN's).
    */
   symbolPayouts: { [symbol: string]: { [matches: number]: number } };
 }
