@@ -26,12 +26,27 @@ jobs:
 
       - name: Ensure assets folder for static copy (Linux case-sensitivity)
         run: |
-          if [ -d "Assets" ] && [ ! -d "assets" ]; then
+          if [ -d "Assets" ]; then
+            rm -rf assets
             cp -r Assets assets
           fi
 
       - name: Build
         run: npm run build
+
+      - name: Copy assets into dist (Images→images for case-sensitive hosting)
+        run: |
+          mkdir -p dist/assets/images
+          if [ -d "Assets/Images" ]; then
+            cp -r Assets/Images/* dist/assets/images/
+          elif [ -d "assets/images" ]; then
+            cp -r assets/images/* dist/assets/images/
+          fi
+          if [ -f "Assets/manifest.json" ]; then
+            cp Assets/manifest.json dist/assets/
+          elif [ -f "assets/manifest.json" ]; then
+            cp assets/manifest.json dist/assets/
+          fi
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
