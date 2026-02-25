@@ -137,6 +137,12 @@ export const FORCE_STOP_SETS: Array<Array<Array<string>>> = [
     ['HIGH3', 'LOW3', 'HIGH3'],
     ['LOW3', 'HIGH3', 'LOW3'],
   ],
+  // No win: no symbol on 3 consecutive reels (different symbol sets per reel)
+  [
+    ['LOW3', 'LOW2', 'LOW1'],
+    ['HIGH4', 'HIGH3', 'HIGH2'],
+    ['HIGH1', 'HIGH1', 'WILD'],
+  ],
 ];
 
 // Payouts per symbol and matches; values are per-way multipliers.
