@@ -141,14 +141,14 @@ export const FORCE_STOP_SETS: Array<Array<Array<string>>> = [
 
 // Payouts per symbol and matches; values are per-way multipliers.
 export const SYMBOL_PAYOUTS: { [key: string]: { [matches: number]: number } } = {
-  LOW3: { 3: 2, 4: 4, 5: 8 },   // Cherry
-  LOW2: { 3: 3, 4: 6, 5: 10 },  // Lemon
-  LOW1: { 3: 4, 4: 8, 5: 12 },  // Plum
-  HIGH4: { 3: 8, 4: 15, 5: 25 }, // Bell
-  HIGH3: { 3: 10, 4: 20, 5: 35 }, // Diamond
-  HIGH2: { 3: 15, 4: 30, 5: 50 }, // Bar
-  HIGH1: { 3: 25, 4: 50, 5: 100 }, // Seven
-  WILD: { 3: 30, 4: 60, 5: 150 }, // Wild
-  BONUS: { 3: 0, 4: 0, 5: 0 }, // Feature handled separately
+  LOW3: { 3: 2 },   // Cherry
+  LOW2: { 3: 3 },  // Lemon
+  LOW1: { 3: 4 },  // Plum
+  HIGH4: { 3: 8 }, // Bell
+  HIGH3: { 3: 10 }, // Diamond
+  HIGH2: { 3: 15 }, // Bar
+  HIGH1: { 3: 25 }, // Seven
+  WILD: { 3: 30 }, // Wild
+  BONUS: { 3: 0 }, // Feature handled separately
 };
 
