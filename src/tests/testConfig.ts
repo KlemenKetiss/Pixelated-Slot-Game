@@ -50,7 +50,7 @@ export const TestConstants = {
   },
   winWays: {
     matchesNoPayout: 2,
-    matchesFive: 3,
+    matchesThree: 3,
     waysMultiplierThreeReelsTwoPerReel: 2 * 2 * 2,
   },
 } as const;

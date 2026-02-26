@@ -23,8 +23,8 @@ describe('WinLogic', () => {
       expect(getSymbolPayout('HIGH1', minReelsForWin, testConfig)).toBe(
         SYMBOL_PAYOUTS.HIGH1[minReelsForWin]
       );
-      expect(getSymbolPayout('WILD', winWays.matchesFive, testConfig)).toBe(
-        SYMBOL_PAYOUTS.WILD[winWays.matchesFive]
+      expect(getSymbolPayout('WILD', winWays.matchesThree, testConfig)).toBe(
+        SYMBOL_PAYOUTS.WILD[winWays.matchesThree]
       );
       expect(getSymbolPayout('BONUS', minReelsForWin, testConfig)).toBe(0);
     });
