@@ -19,6 +19,8 @@
   "devDependencies": {
     "@parcel/transformer-typescript-tsc": "^2.13.3",
     "@types/node": "^20.11.5",
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
     "@typescript-eslint/eslint-plugin": "^8.56.1",
     "@typescript-eslint/parser": "^8.56.1",
     "eslint": "^10.0.1",
@@ -37,6 +39,8 @@
   "dependencies": {
     "@pixi/spine-pixi": "^2.1.1",
     "gsap": "^3.12.7",
-    "pixi.js": "^8.4.0"
+    "pixi.js": "^8.4.0",
+    "react": "^19.2.4",
+    "react-dom": "^19.2.4"
   }
 }

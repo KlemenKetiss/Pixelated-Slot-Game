@@ -2,6 +2,8 @@
   "compilerOptions": {
     "target": "es2016",
     "module": "ESNext",
+    "lib": ["ES2016", "DOM", "DOM.Iterable"],
+    "jsx": "react-jsx",
     "strict": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
