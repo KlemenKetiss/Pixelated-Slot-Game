@@ -6,7 +6,7 @@ import {
 
 /**
  * Hold-to-repeat for bet ±: one step immediately, then after {@link BET_HOLD_DELAY_MS}
- * an interval at {@link BET_HOLD_REPEAT_INTERVAL_MS}. Mirrors `PanelView` behavior.
+ * an interval at {@link BET_HOLD_REPEAT_INTERVAL_MS}. Matches the HTML panel’s bet ± hold behavior.
  */
 export function useBetHold(
   onStep: (direction: 'up' | 'down') => void,

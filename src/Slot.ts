@@ -1,4 +1,6 @@
 import '@pixi/spine-pixi';
+import { createElement } from 'react';
+import { createRoot } from 'react-dom/client';
 import { Application, Assets } from 'pixi.js';
 import {
   GAME_WIDTH,
@@ -19,7 +21,8 @@ import {
 } from './utils/ViewportLayout';
 import { MainView } from './views/MainView';
 import { CharacterSpineView } from './views/character/CharacterSpineView';
-import { PanelView } from './views/panel/PanelView';
+import { GamePanel } from './views/panel/GamePanel';
+import { ReactPanelAdapter } from './views/panel/ReactPanelAdapter';
 import { GameController } from './logic/GameController';
 import type { GameConfig } from './logic/GameTypes';
 
@@ -36,8 +39,9 @@ export function getPixiAppForTesting(): Application | undefined {
 export class Slot {
   private app: Application;
   private mainView!: MainView;
-  private panelView!: PanelView;
+  private panelAdapter!: ReactPanelAdapter;
   private gameController!: GameController;
+  private gameControllerInitialized = false;
 
   constructor() {
     this.app = new Application();
@@ -98,34 +102,51 @@ export class Slot {
           console.error('Failed to create Spine character:', error);
         }
 
-        const overlay = document.getElementById('ui-overlay');
-        if (!overlay) throw new Error('ui-overlay element not found');
-        this.panelView = new PanelView(overlay as HTMLElement, (formatted) => {
+        const panelMount = document.getElementById('panel-root');
+        if (!panelMount) throw new Error('panel-root element not found');
+
+        this.panelAdapter = new ReactPanelAdapter((formatted) => {
           this.mainView.winFieldView.setWinText(formatted);
         });
 
-        const gameConfig: GameConfig = {
-          initialBalance: PANEL_CONFIG.initialBalance,
-          initialWin: INITIAL_WIN,
-          betLevels: BET_LEVELS,
-          defaultBetIndex: DEFAULT_BET_INDEX,
-          forceStopSets: FORCE_STOP_SETS,
-          winningWays: WINNING_WAYS_CONFIG,
-          symbolPayouts: SYMBOL_PAYOUTS,
-        };
-
-        this.gameController = new GameController(
-          this.panelView,
-          this.mainView.reelsView,
-          gameConfig,
-          (remaining) => {
-            this.mainView.featureView.setFreeSpins(remaining);
-          },
+        createRoot(panelMount).render(
+          createElement(GamePanel, {
+            adapter: this.panelAdapter,
+            onAdapterConnected: () => this.ensureGameController(),
+          }),
         );
 
         window.addEventListener('resize', () => this.onResize());
         this.onResize();
       });
+  }
+
+  /**
+   * Runs once after {@link ReactPanelAdapter.connect} so the first
+   * `setBalance` / `setBet` / … from {@link GameController}'s constructor push into React.
+   */
+  private ensureGameController(): void {
+    if (this.gameControllerInitialized) return;
+    this.gameControllerInitialized = true;
+
+    const gameConfig: GameConfig = {
+      initialBalance: PANEL_CONFIG.initialBalance,
+      initialWin: INITIAL_WIN,
+      betLevels: BET_LEVELS,
+      defaultBetIndex: DEFAULT_BET_INDEX,
+      forceStopSets: FORCE_STOP_SETS,
+      winningWays: WINNING_WAYS_CONFIG,
+      symbolPayouts: SYMBOL_PAYOUTS,
+    };
+
+    this.gameController = new GameController(
+      this.panelAdapter,
+      this.mainView.reelsView,
+      gameConfig,
+      (remaining) => {
+        this.mainView.featureView.setFreeSpins(remaining);
+      },
+    );
   }
 
   private onResize(): void {

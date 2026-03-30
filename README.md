@@ -46,9 +46,9 @@ Then open the URL shown in the terminal (usually `http://localhost:1234`).
 
 ### Entry and bootstrap
 
-1. **`index.html`** – Shell: `#game-container`, `#ui-overlay` (balance, bet, win, SPIN, force-outcome buttons). Loads `styles.css` and `index.ts`.
-2. **`index.ts`** – On `window.load`, instantiates `Slot`.
-3. **`Slot.ts`** – Creates the Pixi `Application`, loads assets from `assets/manifest.json`, injects the canvas into `#game-container`, then builds **MainView** (Pixi) and **PanelView** (HTML), builds **GameConfig** from `config`, and creates **GameController**. Registers a resize handler that uses **ViewportLayout** to scale and center the game container.
+1. **`index.html`** – Shell: `#game-container`, `#panel-root` (React mounts the overlay here). Loads `styles.css` and `index.tsx`.
+2. **`index.tsx`** – On `window.load`, instantiates `Slot`.
+3. **`Slot.ts`** – Creates the Pixi `Application`, loads assets from `assets/manifest.json`, injects the canvas into `#game-container`, builds **MainView** (Pixi), then **`createRoot(#panel-root).render(<GamePanel />)`** with a **`ReactPanelAdapter`** (implements **`PanelPort`**). After the adapter connects to React state, **`GameController`** is constructed so the first panel sync runs into the UI. **`onWinDisplay`** on the adapter still drives **Pixi `WinFieldView`** text. Registers a resize handler that uses **ViewportLayout** to scale and center the game container.
 
 ### Configuration
 
@@ -72,15 +72,15 @@ Then open the URL shown in the terminal (usually `http://localhost:1234`).
   - **WinFieldView** – Pixi “win” amount (pixel font).  
   - **FeatureView** – Free-spins counter overlay.  
 
-- **HTML (PanelView)**  
-  - Binds to `#balance-display`, `#bet-display`, `#win-display`, spin button, bet ±, and all `.btn-force` buttons.  
-  - Implements `PanelPort`: updates balance/bet/win, spin enabled, bet buttons, force selection; calls back for spin requested, force outcome index, and bet change.
+- **React (`GamePanel` + `ReactPanelAdapter`)**  
+  - Renders the same overlay markup/ids/classes as before (e.g. `#ui-overlay`, `#balance-display`, bet ±, SPIN, `.btn-force`) so **`styles.css`** is unchanged.  
+  - **`ReactPanelAdapter`** implements **`PanelPort`**: forwards controller updates into React state; exposes **`invokeSpinRequested`**, **`invokeBetChange`**, **`invokeForceOutcome`** for the UI. Bet ± hold-to-repeat uses **`useBetHold`**. Pixi win text is synced via the adapter’s optional callback, same as before.
 
 ### Data flow (high level)
 
-- **User clicks SPIN** → Panel callback → GameController `handleSpinRequested` → `handleGameState(SPIN_REQUESTED)` → deduct bet (or use free spin) → set `reels.forceStops` from config if a force is selected → `reels.emit('spinButtonClicked')` → ReelsView spins (random or forced stops).
-- **Reels finish** → ReelsView emits `spinConcluded` → GameController `handleSpinConcluded` → `checkForWinningWays(reels.getStops(), config)` → update balance, award free spins if 3× Bonus → `handleGameState(SPIN_CONCLUDED)` → update panel and feature view.
-- **Bet / Force** → Panel callbacks → GameController → `handleGameState(BET_UP|BET_DOWN|FORCE_SELECTED)` → update panel state.
+- **User clicks SPIN** → `ReactPanelAdapter` / `PanelPort` → GameController `handleSpinRequested` → `handleGameState(SPIN_REQUESTED)` → deduct bet (or use free spin) → set `reels.forceStops` from config if a force is selected → `reels.emit('spinButtonClicked')` → ReelsView spins (random or forced stops).
+- **Reels finish** → ReelsView emits `spinConcluded` → GameController `handleSpinConcluded` → `checkForWinningWays(reels.getStops(), config)` → update balance, award free spins if 3× Bonus → `handleGameState(SPIN_CONCLUDED)` → update panel (HTML + Pixi win text) and feature view.
+- **Bet / Force** → adapter / `PanelPort` callbacks → GameController → `handleGameState(BET_UP|BET_DOWN|FORCE_SELECTED)` → update panel state.
 
 ### Utilities and tests
 
@@ -95,22 +95,25 @@ Then open the URL shown in the terminal (usually `http://localhost:1234`).
 
 ```
 src/
-├── index.html          # Page shell + UI overlay markup
-├── index.ts            # Entry: new Slot() on load
-├── Slot.ts             # Pixi app, asset load, MainView + PanelView + GameController, resize
+├── index.html          # Page shell + #panel-root (React overlay mount)
+├── index.tsx           # Entry: new Slot() on load
+├── Slot.ts             # Pixi app, asset load, MainView, React panel root, GameController, resize
 ├── styles.css          # Layout and styling for overlay
+├── hooks/
+│   └── useBetHold.ts   # Hold-to-repeat for bet ±
 ├── logic/              # Pure game logic
 │   ├── GameTypes.ts
 │   ├── GameStateHandler.ts
 │   ├── WinLogic.ts
 │   └── GameController.ts
-├── views/              # Pixi and HTML views
+├── views/              # Pixi and React UI
 │   ├── MainView.ts
-│   ├── panel/PanelView.ts
+│   ├── panel/GamePanel.tsx, ReactPanelAdapter.ts
 │   ├── reels/ReelsView.ts, ReelView.ts, SymbolView.ts, frame/*
 │   ├── winField/, feature/, background/
 ├── utils/
 │   ├── config.ts       # All game/config constants
+│   ├── panelFormat.ts
 │   ├── Helper.ts
 │   ├── ViewportLayout.ts
 │   └── SymbolGenerator.ts
@@ -123,7 +126,8 @@ assets/                 # manifest.json, images, fonts (Parcel copies to output)
 ## Tech stack
 
 - **Pixi.js** – Canvas rendering (reels, symbols, frame, background, win/feature overlays).
-- **TypeScript** – Typed logic and views.
+- **React** + **react-dom** – HTML overlay (`GamePanel`) mounted with `createRoot`.
+- **TypeScript** – Typed logic and views (including TSX for the panel).
 - **Parcel** – Dev server and production build; `parcel-reporter-static-files-copy` copies `assets/` to the build output.
 - **Vitest** – Unit tests.
 - **GSAP** – Used in symbol win animation (e.g. in `SymbolView`).

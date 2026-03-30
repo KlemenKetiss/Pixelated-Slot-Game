@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { useBetHold } from '../../hooks/useBetHold';
 import { formatPanelAmount } from '../../utils/panelFormat';
 import {
@@ -17,18 +17,24 @@ const FORCE_OUTCOME_BUTTONS: ReadonlyArray<{ index: number; label: string }> =
 
 export type GamePanelProps = {
   adapter: ReactPanelAdapter;
+  /** Called once after {@link ReactPanelAdapter.connect} so {@link GameController} can sync after React state is live. */
+  onAdapterConnected?: () => void;
 };
 
 /**
- * React overlay matching `#ui-overlay` in `index.html`: same ids/classes for existing CSS.
+ * React overlay: same ids/classes as the legacy HTML panel for existing CSS.
  */
-export function GamePanel({ adapter }: GamePanelProps) {
+export function GamePanel({ adapter, onAdapterConnected }: GamePanelProps) {
   const [display, setDisplay] = useState<PanelDisplayState>(
     createDefaultPanelDisplayState,
   );
 
+  const onConnectedRef = useRef(onAdapterConnected);
+  onConnectedRef.current = onAdapterConnected;
+
   useEffect(() => {
     adapter.connect(setDisplay);
+    onConnectedRef.current?.();
     return () => adapter.disconnect();
   }, [adapter]);
 
