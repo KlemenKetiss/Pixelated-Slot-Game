@@ -1,4 +1,5 @@
 import type { PanelPort } from '../../logic/GameTypes';
+import { formatPanelAmount } from '../../utils/panelFormat';
 
 /**
  * Snapshot of panel chrome driven by {@link GameController} via {@link PanelPort}.
@@ -14,7 +15,7 @@ export interface PanelDisplayState {
   forceSelectedIndex: number | null;
 }
 
-function defaultPanelDisplayState(): PanelDisplayState {
+export function createDefaultPanelDisplayState(): PanelDisplayState {
   return {
     balance: 0,
     win: 0,
@@ -33,7 +34,7 @@ function defaultPanelDisplayState(): PanelDisplayState {
  * {@link invokeForceOutcome}, and {@link invokeBetChange}.
  */
 export class ReactPanelAdapter implements PanelPort {
-  private display: PanelDisplayState = defaultPanelDisplayState();
+  private display: PanelDisplayState = createDefaultPanelDisplayState();
   private onStateChange: ((state: PanelDisplayState) => void) | null = null;
 
   private spinRequestedCallback: (() => void) | null = null;
@@ -75,7 +76,7 @@ export class ReactPanelAdapter implements PanelPort {
       this.push();
       return;
     }
-    const formatted = this.formatAmount(value);
+    const formatted = formatPanelAmount(value);
     this.display = { ...this.display, win: value };
     this.onWinDisplay?.(formatted);
     this.push();
@@ -137,11 +138,5 @@ export class ReactPanelAdapter implements PanelPort {
     this.forceOutcomeCallback = null;
     this.betChangeCallback = null;
     this.disconnect();
-  }
-
-  private formatAmount(value: number): string {
-    if (!Number.isFinite(value)) return '0';
-    const fixed = value.toFixed(2);
-    return fixed.replace(/\.?0+$/, '');
   }
 }
