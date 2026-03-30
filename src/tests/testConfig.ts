@@ -11,7 +11,7 @@ import {
 
 /**
  * Game config for unit tests using the same symbols and payouts as the real game.
- * Tests then validate logic against actual paytable and symbols (LOW3, HIGH1, WILD, etc.).
+ * Tests then validate logic against actual paytable and symbols (9, A, M*, H*).
  */
 export const testConfig: GameConfig = {
   initialBalance: PANEL_CONFIG.initialBalance,

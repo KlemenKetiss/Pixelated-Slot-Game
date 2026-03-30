@@ -194,14 +194,14 @@ export class ReelsView extends Container {
       for (let rowIndex = 0; rowIndex < this.options.numRows; rowIndex++) {
         let symbol = symbolGenerator.getRandomSymbol();
 
-        if (symbol === 'Bonus' && bonusUsed) {
-          // Re-roll until we get a non-Bonus symbol for this reel.
-          while (symbol === 'Bonus') {
+        if (symbol === 'BONUS' && bonusUsed) {
+          // Re-roll until we get a non-BONUS symbol for this reel.
+          while (symbol === 'BONUS') {
             symbol = symbolGenerator.getRandomSymbol();
           }
         }
 
-        if (symbol === 'Bonus') {
+        if (symbol === 'BONUS') {
           bonusUsed = true;
         }
 
@@ -233,7 +233,7 @@ export class ReelsView extends Container {
     let bonusCount = 0;
     this.stops.forEach((reel) => {
       reel.forEach((symbol) => {
-        if (symbol === 'Bonus') {
+        if (symbol === 'BONUS') {
           bonusCount++;
         }
       });

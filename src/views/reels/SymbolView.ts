@@ -12,8 +12,7 @@ import {
 import gsap from 'gsap';
 
 /**
- * Single symbol that uses only the base texture from the manifest.
- * There are no separate "_connect" win textures in this project.
+ * Single symbol that uses base + optional "_connect" texture from the manifest.
  */
 export class SymbolView extends Container {
   private _symbolName: string = '';
@@ -21,6 +20,7 @@ export class SymbolView extends Container {
   private winTween?: gsap.core.Tween;
   private baseScaleX = 1;
   private baseScaleY = 1;
+  private hasConnectTexture = false;
 
   constructor(symbolName: string) {
     super();
@@ -31,6 +31,8 @@ export class SymbolView extends Container {
     try {
       this._symbolName = symbolName;
       const baseTexture = Assets.get(symbolName);
+      const connectTexture = Assets.get(`${symbolName}_connect`);
+      this.hasConnectTexture = Boolean(connectTexture);
       if (baseTexture) {
         this.symbolTexture = new Sprite(baseTexture);
         this.symbolTexture.anchor.set(0.5);
@@ -101,6 +103,12 @@ export class SymbolView extends Container {
   public playWinAnimation(): void {
     if (this.symbolTexture) {
       this.resetWinAnimation();
+      if (this.hasConnectTexture) {
+        const connectTexture = Assets.get(`${this._symbolName}_connect`);
+        if (connectTexture) {
+          this.symbolTexture.texture = connectTexture;
+        }
+      }
       this.winTween = gsap.to(this.symbolTexture, {
         duration: SYMBOL_WIN_ANIMATION_CONFIG.duration,
         repeat: -1,
@@ -121,6 +129,10 @@ export class SymbolView extends Container {
       this.winTween = undefined;
     }
     if (this.symbolTexture) {
+      const baseTexture = Assets.get(this._symbolName);
+      if (baseTexture) {
+        this.symbolTexture.texture = baseTexture;
+      }
       this.symbolTexture.alpha = 1;
       this.symbolTexture.scale.set(this.baseScaleX, this.baseScaleY);
       this.symbolTexture.x = SYMBOL_WIDTH / 2;

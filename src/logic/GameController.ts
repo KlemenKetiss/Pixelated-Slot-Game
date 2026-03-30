@@ -217,11 +217,11 @@ export class GameController {
     // Informs reels view to set appropriate GameMode (bonus visually).
     this.reels.checkBonusCondition();
 
-    // Tally the number of "Bonus" symbols on screen.
+    // Tally the number of "BONUS" symbols on screen.
     let bonusCount = 0;
     stops.forEach((reel) => {
       reel.forEach((symbol) => {
-        if (symbol === 'Bonus') {
+        if (symbol === 'BONUS') {
           bonusCount++;
         }
       });

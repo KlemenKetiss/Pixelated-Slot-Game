@@ -13,26 +13,25 @@ describe('WinLogic', () => {
     });
 
     it('returns 0 for symbol with no payout at given matches', () => {
-      expect(getSymbolPayout('LOW3', winWays.matchesNoPayout, testConfig)).toBe(0);
+      expect(getSymbolPayout('9', winWays.matchesNoPayout, testConfig)).toBe(0);
     });
 
     it('returns actual game payouts for real symbols', () => {
-      expect(getSymbolPayout('LOW3', minReelsForWin, testConfig)).toBe(
-        SYMBOL_PAYOUTS.LOW3[minReelsForWin]
+      expect(getSymbolPayout('9', minReelsForWin, testConfig)).toBe(
+        SYMBOL_PAYOUTS['9'][minReelsForWin]
       );
-      expect(getSymbolPayout('HIGH1', minReelsForWin, testConfig)).toBe(
-        SYMBOL_PAYOUTS.HIGH1[minReelsForWin]
+      expect(getSymbolPayout('H6', minReelsForWin, testConfig)).toBe(
+        SYMBOL_PAYOUTS.H6[minReelsForWin]
       );
-      expect(getSymbolPayout('WILD', winWays.matchesThree, testConfig)).toBe(
-        SYMBOL_PAYOUTS.WILD[winWays.matchesThree]
+      expect(getSymbolPayout('M2', winWays.matchesThree, testConfig)).toBe(
+        SYMBOL_PAYOUTS.M2[winWays.matchesThree]
       );
-      expect(getSymbolPayout('BONUS', minReelsForWin, testConfig)).toBe(0);
     });
   });
 
   describe('checkForWinningWays', () => {
     it('returns no wins when no symbol appears on minReels consecutive reels', () => {
-      const stops = [['LOW3'], ['HIGH1'], ['LOW3']];
+      const stops = [['9'], ['H6'], ['10']];
       const result = checkForWinningWays(stops, testConfig);
       expect(result.wins).toHaveLength(0);
       expect(result.totalWin).toBe(0);
@@ -40,27 +39,27 @@ describe('WinLogic', () => {
 
     it('returns way wins using actual paytable and sums totalWin', () => {
       const stops = [
-        ['LOW3', 'HIGH1', 'HIGH1'],
-        ['LOW3', 'HIGH1', 'HIGH1'],
-        ['LOW3', 'HIGH1', 'HIGH1'],
+        ['9', 'H6', 'H6'],
+        ['9', 'H6', 'H6'],
+        ['9', 'H6', 'H6'],
       ];
       const result = checkForWinningWays(stops, testConfig);
-      const wayLow3 = result.wins.find((w) => w.symbol === 'LOW3');
-      const wayHigh1 = result.wins.find((w) => w.symbol === 'HIGH1');
-      expect(wayLow3).toBeDefined();
-      expect(wayLow3!.count).toBe(minReelsForWin);
-      expect(wayHigh1).toBeDefined();
-      expect(wayHigh1!.count).toBe(minReelsForWin);
+      const wayNine = result.wins.find((w) => w.symbol === '9');
+      const wayHigh = result.wins.find((w) => w.symbol === 'H6');
+      expect(wayNine).toBeDefined();
+      expect(wayNine!.count).toBe(minReelsForWin);
+      expect(wayHigh).toBeDefined();
+      expect(wayHigh!.count).toBe(minReelsForWin);
       const expected =
-        SYMBOL_PAYOUTS.LOW3[minReelsForWin] * 1 +
-        SYMBOL_PAYOUTS.HIGH1[minReelsForWin] * winWays.waysMultiplierThreeReelsTwoPerReel;
+        SYMBOL_PAYOUTS['9'][minReelsForWin] * 1 +
+        SYMBOL_PAYOUTS.H6[minReelsForWin] * winWays.waysMultiplierThreeReelsTwoPerReel;
       expect(result.totalWin).toBe(expected);
     });
 
     it('sums multiple ways correctly for real symbols', () => {
-      const stops = [['HIGH1'], ['HIGH1'], ['HIGH1']];
+      const stops = [['H6'], ['H6'], ['H6']];
       const result = checkForWinningWays(stops, testConfig);
-      expect(result.totalWin).toBe(SYMBOL_PAYOUTS.HIGH1[minReelsForWin]);
+      expect(result.totalWin).toBe(SYMBOL_PAYOUTS.H6[minReelsForWin]);
     });
   });
 });

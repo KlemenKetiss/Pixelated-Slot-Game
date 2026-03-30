@@ -4,40 +4,152 @@
       "name": "game-bundle",
       "assets": [
         {
-          "alias": "LOW3",
-          "src": "./images/Cherry.png"
+          "alias": "9",
+          "src": "./images/symbols/9.png"
         },
         {
-          "alias": "LOW2",
-          "src": "./images/Lemon.png"
+          "alias": "10",
+          "src": "./images/symbols/10.png"
         },
         {
-          "alias": "LOW1",
-          "src": "./images/Plum.png"
+          "alias": "J",
+          "src": "./images/symbols/J.png"
         },
         {
-          "alias": "HIGH4",
-          "src": "./images/Bell.png"
+          "alias": "Q",
+          "src": "./images/symbols/Q.png"
         },
         {
-          "alias": "HIGH3",
-          "src": "./images/Diamond.png"
+          "alias": "K",
+          "src": "./images/symbols/K.png"
         },
         {
-          "alias": "HIGH2",
-          "src": "./images/Bar.png"
+          "alias": "A",
+          "src": "./images/symbols/A.png"
         },
         {
-          "alias": "HIGH1",
-          "src": "./images/Seven.png"
+          "alias": "M1",
+          "src": "./images/symbols/M1.png"
         },
         {
-          "alias": "Bonus",
-          "src": "./images/Bonus.png"
+          "alias": "M2",
+          "src": "./images/symbols/M2.png"
         },
         {
-          "alias": "WILD",
-          "src": "./images/Wild.png"
+          "alias": "M3",
+          "src": "./images/symbols/M3.png"
+        },
+        {
+          "alias": "M4",
+          "src": "./images/symbols/M4.png"
+        },
+        {
+          "alias": "M5",
+          "src": "./images/symbols/M5.png"
+        },
+        {
+          "alias": "M6",
+          "src": "./images/symbols/M6.png"
+        },
+        {
+          "alias": "H1",
+          "src": "./images/symbols/H1.png"
+        },
+        {
+          "alias": "H2",
+          "src": "./images/symbols/H2.png"
+        },
+        {
+          "alias": "H3",
+          "src": "./images/symbols/H3.png"
+        },
+        {
+          "alias": "H4",
+          "src": "./images/symbols/H4.png"
+        },
+        {
+          "alias": "H5",
+          "src": "./images/symbols/H5.png"
+        },
+        {
+          "alias": "H6",
+          "src": "./images/symbols/H6.png"
+        },
+        {
+          "alias": "BONUS",
+          "src": "./images/symbols/BONUS.png"
+        },
+        {
+          "alias": "9_connect",
+          "src": "./images/symbols_win/9_connect.png"
+        },
+        {
+          "alias": "10_connect",
+          "src": "./images/symbols_win/10_connect.png"
+        },
+        {
+          "alias": "J_connect",
+          "src": "./images/symbols_win/J_connect.png"
+        },
+        {
+          "alias": "Q_connect",
+          "src": "./images/symbols_win/Q_connect.png"
+        },
+        {
+          "alias": "K_connect",
+          "src": "./images/symbols_win/K_connect.png"
+        },
+        {
+          "alias": "A_connect",
+          "src": "./images/symbols_win/A_connect.png"
+        },
+        {
+          "alias": "M1_connect",
+          "src": "./images/symbols_win/M1_connect.png"
+        },
+        {
+          "alias": "M2_connect",
+          "src": "./images/symbols_win/M2_connect.png"
+        },
+        {
+          "alias": "M3_connect",
+          "src": "./images/symbols_win/M3_connect.png"
+        },
+        {
+          "alias": "M4_connect",
+          "src": "./images/symbols_win/M4_connect.png"
+        },
+        {
+          "alias": "M5_connect",
+          "src": "./images/symbols_win/M5_connect.png"
+        },
+        {
+          "alias": "M6_connect",
+          "src": "./images/symbols_win/M6_connect.png"
+        },
+        {
+          "alias": "H1_connect",
+          "src": "./images/symbols_win/H1_connect.png"
+        },
+        {
+          "alias": "H2_connect",
+          "src": "./images/symbols_win/H2_connect.png"
+        },
+        {
+          "alias": "H3_connect",
+          "src": "./images/symbols_win/H3_connect.png"
+        },
+        {
+          "alias": "H4_connect",
+          "src": "./images/symbols_win/H4_connect.png"
+        },
+        {
+          "alias": "H5_connect",
+          "src": "./images/symbols_win/H5_connect.png"
+        },
+        {
+          "alias": "H6_connect",
+          "src": "./images/symbols_win/H6_connect.png"
         },
         {
           "alias": "BetField",

@@ -23,6 +23,16 @@ import { PanelView } from './views/panel/PanelView';
 import { GameController } from './logic/GameController';
 import type { GameConfig } from './logic/GameTypes';
 
+type PixiTestingGlobals = typeof globalThis & {
+  __PIXI_APP__?: Application;
+  __PIXI_STAGE__?: Application['stage'];
+  __PIXI_RENDERER__?: Application['renderer'];
+};
+
+export function getPixiAppForTesting(): Application | undefined {
+  return (globalThis as PixiTestingGlobals).__PIXI_APP__;
+}
+
 export class Slot {
   private app: Application;
   private mainView!: MainView;
@@ -31,6 +41,7 @@ export class Slot {
 
   constructor() {
     this.app = new Application();
+    (globalThis as PixiTestingGlobals).__PIXI_APP__ = this.app;
     this.app
       .init({
         width: GAME_WIDTH,
@@ -39,6 +50,8 @@ export class Slot {
         antialias: false,
       })
       .then(async () => {
+        (globalThis as PixiTestingGlobals).__PIXI_STAGE__ = this.app.stage;
+        (globalThis as PixiTestingGlobals).__PIXI_RENDERER__ = this.app.renderer;
         const container = document.getElementById('game-container');
         if (container) {
           container.insertBefore(this.app.canvas, container.firstChild);

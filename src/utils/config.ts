@@ -3,20 +3,20 @@ export const GAME_WIDTH = 1920;
 export const GAME_HEIGHT = 1080;
 
 // Symbol and reel layout for a 3x3 grid
-export const SYMBOL_WIDTH = 160;
-export const SYMBOL_HEIGHT = 160;
+export const SYMBOL_WIDTH = 110;
+export const SYMBOL_HEIGHT = 110;
 
 // Reel frame layout and scaling
 export const REEL_FRAME_Y_OFFSET = 10;
 export const REEL_FRAME_SCALE = 1.1;
 
 export const REELS_CONFIG = {
-  numReels: 3,
+  numReels: 5,
   numRows: 3,
   reelWidth: SYMBOL_WIDTH,
   symbolHeight: SYMBOL_HEIGHT,
-  reelSpacing: 20,
-  symbolSpacing: 8,
+  reelSpacing: 0,
+  symbolSpacing: 0,
   yOffset: 80,
   screenWidth: GAME_WIDTH,
   bonusSymbolThreshold: 3,
@@ -102,59 +102,85 @@ export const SYMBOL_WIN_ANIMATION_CONFIG = {
   shakeOffsetX: 3,
 };
 
-// Symbol set tailored for a compact 3x3 game; aliases should match asset names.
-// LOW3 (Cherry), LOW2 (Lemon), LOW1 (Plum), HIGH4 (Bell),
-// HIGH3 (Diamond), HIGH2 (Bar), HIGH1 (Seven), WILD (Wild)
+// Symbol set matching the new assets under assets/images/symbols.
 export const SYMBOLS: string[] = [
-  'LOW3',  // Cherry
-  'LOW2',  // Lemon
-  'LOW1',  // Plum
-  'HIGH4', // Bell
-  'HIGH3', // Diamond
-  'HIGH2', // Bar
-  'HIGH1', // Seven
-  'WILD',  // Wild
-  'Bonus', // Bonus / feature symbol
+  '9',
+  '10',
+  'J',
+  'Q',
+  'K',
+  'A',
+  'M1',
+  'M2',
+  'M3',
+  'M4',
+  'M5',
+  'M6',
+  'H1',
+  'H2',
+  'H3',
+  'H4',
+  'H5',
+  'H6',
+  'BONUS',
 ];
 
-// Example forced outcomes for dev/debug (placeholder, can be tuned later).
+// Forced outcomes aligned with the new symbol set.
 export const FORCE_STOP_SETS: Array<Array<Array<string>>> = [
-  // High win: strong Seven / high symbol connections
+  // High win: many H6 symbols across all reels.
   [
-    ['HIGH1', 'WILD', 'HIGH1'],
-    ['HIGH1', 'HIGH1', 'WILD'],
-    ['HIGH1', 'HIGH1', 'WILD'],
+    ['H6', 'H5', 'H6'],
+    ['H6', 'H6', 'H4'],
+    ['H6', 'H6', 'H3'],
+    ['H6', 'H2', 'H6'],
+    ['H6', 'H1', 'H6'],
   ],
-  // Bonus trigger (3 BONUS on screen)
+  // Mid win: M3 appears on all reels.
   [
-    ['Bonus', 'LOW3', 'HIGH2'],
-    ['LOW2', 'Bonus', 'HIGH3'],
-    ['HIGH4', 'LOW1', 'Bonus'],
+    ['BONUS', 'Q', '10'],
+    ['K', 'BONUS', 'J'],
+    ['A', '9', 'BONUS'],
+    ['M3', 'J', 'Q'],
+    ['10', 'M3', 'K'],
   ],
-  // Mixed mid wins: combinations of lows and highs
+  // Multi-way card win: mixed card symbols with strong K ways.
   [
-    ['LOW3', 'LOW3', 'HIGH3'],
-    ['HIGH3', 'LOW3', 'HIGH3'],
-    ['LOW3', 'HIGH3', 'LOW3'],
+    ['K', 'K', 'A'],
+    ['Q', 'K', 'K'],
+    ['K', 'J', 'K'],
+    ['K', 'A', 'Q'],
+    ['J', 'K', '10'],
   ],
-  // No win: no symbol on 3 consecutive reels (different symbol sets per reel)
+  // No win: no symbol appears on 3 consecutive reels.
   [
-    ['LOW3', 'LOW2', 'LOW1'],
-    ['HIGH4', 'HIGH3', 'HIGH2'],
-    ['HIGH1', 'HIGH1', 'WILD'],
+    ['9', '10', 'J'],
+    ['Q', 'K', 'A'],
+    ['M1', 'M2', 'M3'],
+    ['M4', 'M5', 'M6'],
+    ['H1', 'H2', 'H3'],
   ],
 ];
 
 // Payouts per symbol and matches; values are per-way multipliers.
 export const SYMBOL_PAYOUTS: { [key: string]: { [matches: number]: number } } = {
-  LOW3: { 3: 2 },   // Cherry
-  LOW2: { 3: 3 },  // Lemon
-  LOW1: { 3: 4 },  // Plum
-  HIGH4: { 3: 8 }, // Bell
-  HIGH3: { 3: 10 }, // Diamond
-  HIGH2: { 3: 15 }, // Bar
-  HIGH1: { 3: 25 }, // Seven
-  WILD: { 3: 30 }, // Wild
-  BONUS: { 3: 0 }, // Feature handled separately
+  '9': { 3: 2 },
+  '10': { 3: 2.5 },
+  J: { 3: 3 },
+  Q: { 3: 3.5 },
+  K: { 3: 4 },
+  A: { 3: 5 },
+  M1: { 3: 6 },
+  M2: { 3: 7 },
+  M3: { 3: 8 },
+  M4: { 3: 9 },
+  M5: { 3: 10 },
+  M6: { 3: 12 },
+  H1: { 3: 14 },
+  H2: { 3: 16 },
+  H3: { 3: 18 },
+  H4: { 3: 20 },
+  H5: { 3: 24 },
+  H6: { 3: 30 },
+  BONUS: { 3: 0 },
 };
 

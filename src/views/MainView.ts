@@ -18,7 +18,7 @@ export class MainView extends Container {
   public readonly reelsView: ReelsView;
   public readonly reelFrame: ReelFrame;
   public readonly winFieldView: WinFieldView;
-  public readonly reelSeparators: ReelSeparatorView;
+  //public readonly reelSeparators: ReelSeparatorView;
   public readonly featureView: FeatureView;
   public readonly backgroundView: BackgroundView;
   public readonly reelsViewBackground: ReelsViewBackground;
