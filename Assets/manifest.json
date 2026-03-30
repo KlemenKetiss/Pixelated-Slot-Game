@@ -66,6 +66,14 @@
         {
           "alias": "Background",
           "src": "./images/Background.png"
+        },
+        {
+          "alias": "CharacterSkeleton",
+          "src": "./characterSpine/character.json"
+        },
+        {
+          "alias": "CharacterAtlas",
+          "src": "./characterSpine/character.atlas"
         }
       ]
     }

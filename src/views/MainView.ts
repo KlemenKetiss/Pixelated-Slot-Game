@@ -13,6 +13,8 @@ import { ReelsViewBackground } from './reels/frame/ReelsViewBackground';
  * Currently only hosts the reels, but later can include backgrounds, frames, etc.
  */
 export class MainView extends Container {
+  /** Host for Spine character; filled after assets load (see `Slot`). */
+  public readonly characterSpineLayer: Container;
   public readonly reelsView: ReelsView;
   public readonly reelFrame: ReelFrame;
   public readonly winFieldView: WinFieldView;
@@ -22,19 +24,21 @@ export class MainView extends Container {
   public readonly reelsViewBackground: ReelsViewBackground;
   constructor() {
     super();
+    this.characterSpineLayer = new Container();
     this.backgroundView = new BackgroundView();
     this.reelsViewBackground = new ReelsViewBackground();
     this.reelFrame = new ReelFrame();
     this.winFieldView = new WinFieldView();
     this.reelsView = new ReelsView();
-    this.reelSeparators = new ReelSeparatorView(REELS_CONFIG.numReels - 1);
+    //this.reelSeparators = new ReelSeparatorView(REELS_CONFIG.numReels - 1);
     this.featureView = new FeatureView();
     this.layoutReels();
     this.addChild(this.backgroundView);
     this.addChild(this.reelsViewBackground);
     this.addChild(this.reelsView);
-    this.addChild(this.reelSeparators);
-    this.addChild(this.reelFrame);
+    //this.addChild(this.reelSeparators);
+    //this.addChild(this.reelFrame);
+    this.addChild(this.characterSpineLayer);
     this.addChild(this.winFieldView);
     this.addChild(this.featureView);
 
@@ -47,9 +51,9 @@ export class MainView extends Container {
       GAME_WIDTH / 2,
       GAME_HEIGHT / 2,
     );
-    this.reelSeparators.x = this.reelsView.x;
-    this.reelSeparators.y = this.reelsView.y;
-    this.reelSeparators.height = this.reelsView.height;
+    //this.reelSeparators.x = this.reelsView.x;
+    //this.reelSeparators.y = this.reelsView.y;
+    //this.reelSeparators.height = this.reelsView.height;
   }
 }
 

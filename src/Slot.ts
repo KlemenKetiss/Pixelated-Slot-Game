@@ -1,3 +1,4 @@
+import '@pixi/spine-pixi';
 import { Application, Assets } from 'pixi.js';
 import {
   GAME_WIDTH,
@@ -17,6 +18,7 @@ import {
   applyScaledCenteredLayout,
 } from './utils/ViewportLayout';
 import { MainView } from './views/MainView';
+import { CharacterSpineView } from './views/character/CharacterSpineView';
 import { PanelView } from './views/panel/PanelView';
 import { GameController } from './logic/GameController';
 import type { GameConfig } from './logic/GameTypes';
@@ -75,6 +77,13 @@ export class Slot {
 
         this.mainView = new MainView();
         this.app.stage.addChild(this.mainView);
+
+        try {
+          const characterSpine = CharacterSpineView.create();
+          this.mainView.characterSpineLayer.addChild(characterSpine);
+        } catch (error) {
+          console.error('Failed to create Spine character:', error);
+        }
 
         const overlay = document.getElementById('ui-overlay');
         if (!overlay) throw new Error('ui-overlay element not found');

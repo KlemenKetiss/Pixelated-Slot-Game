@@ -35,8 +35,8 @@
     }
   },
   "dependencies": {
+    "@pixi/spine-pixi": "^2.1.1",
     "gsap": "^3.12.7",
-    "pixi.js": "^8.6.6"
+    "pixi.js": "^8.4.0"
   }
 }
-
