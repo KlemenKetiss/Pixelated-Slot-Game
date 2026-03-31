@@ -14,6 +14,7 @@ import {
   FEATURE_COUNTER_FONT_SIZE,
   FEATURE_TITLE_COLOR,
   FEATURE_COUNTER_COLOR,
+  FEATURE_VIEW_Y_OFFSET_FROM_CENTER,
 } from '../../utils/config';
 
 /** Mostly transparent dark fill for shadow background. */
@@ -104,7 +105,7 @@ export class FeatureView extends Container {
    */
   private positionFeatureView(): void {
     this.x = GAME_WIDTH / 2 - FEATURE_VIEW_X_OFFSET;
-    this.y = GAME_HEIGHT / 2;
+    this.y = GAME_HEIGHT / 2 - FEATURE_VIEW_Y_OFFSET_FROM_CENTER;
   }
 
   /**

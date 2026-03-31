@@ -13,6 +13,10 @@ const SPINE_ALIASES = {
   atlas: 'CharacterAtlas',
 };
 const PREFERRED_IDLE_ANIMATION = 'character_idle';
+const CHARACTER_WIN_ANIMATION = 'character_small_win';
+const CHARACTER_BONUS_ENTER_ANIMATION = 'character_bonus_anticipation_win'; //Also used for retrigger
+const CHARACTER_REACTION_MIX_DURATION = 0.2;
+const CHARACTER_IDLE_RETURN_MIX_DURATION = 0.25;
 
 /**
  * Character-specific Spine view (layout only) on top of generic SpineView.
@@ -39,5 +43,32 @@ export class CharacterSpineView extends SpineView {
     this.spine.scale.set(scale);
     this.x = GAME_WIDTH * CHARACTER_X_RATIO;
     this.y = GAME_HEIGHT * CHARACTER_Y_RATIO;
+  }
+
+  playWinReaction(): void {
+    this.playReaction(CHARACTER_WIN_ANIMATION);
+  }
+
+  playBonusEnterReaction(): void {
+    this.playReaction(CHARACTER_BONUS_ENTER_ANIMATION);
+  }
+
+  private playReaction(animationName: string): void {
+    if (!this.hasAnimation(animationName)) {
+      this.playIdle();
+      return;
+    }
+    this.setAnimation(0, animationName, false, CHARACTER_REACTION_MIX_DURATION);
+    this.addAnimation(
+      0,
+      PREFERRED_IDLE_ANIMATION,
+      true,
+      0,
+      CHARACTER_IDLE_RETURN_MIX_DURATION,
+    );
+  }
+
+  private playIdle(): void {
+    this.setAnimation(0, PREFERRED_IDLE_ANIMATION, true, CHARACTER_REACTION_MIX_DURATION);
   }
 }

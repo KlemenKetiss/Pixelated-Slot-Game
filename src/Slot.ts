@@ -20,10 +20,10 @@ import {
   applyScaledCenteredLayout,
 } from './utils/ViewportLayout';
 import { MainView } from './views/MainView';
-import { CharacterSpineView } from './views/character/CharacterSpineView';
 import { GamePanel } from './views/panel/GamePanel';
 import { ReactPanelAdapter } from './views/panel/ReactPanelAdapter';
 import { GameController } from './logic/GameController';
+import { CharacterController } from './logic/CharacterController';
 import type { GameConfig } from './logic/GameTypes';
 
 type PixiTestingGlobals = typeof globalThis & {
@@ -41,6 +41,7 @@ export class Slot {
   private mainView!: MainView;
   private panelAdapter!: ReactPanelAdapter;
   private gameController!: GameController;
+  private characterController!: CharacterController;
   private gameControllerInitialized = false;
 
   constructor() {
@@ -94,13 +95,9 @@ export class Slot {
 
         this.mainView = new MainView();
         this.app.stage.addChild(this.mainView);
-
-        try {
-          const characterSpine = CharacterSpineView.create();
-          this.mainView.characterSpineLayer.addChild(characterSpine);
-        } catch (error) {
-          console.error('Failed to create Spine character:', error);
-        }
+        this.characterController = new CharacterController(
+          this.mainView.characterSpineView,
+        );
 
         const panelMount = document.getElementById('panel-root');
         if (!panelMount) throw new Error('panel-root element not found');
@@ -146,6 +143,8 @@ export class Slot {
       (remaining) => {
         this.mainView.featureView.setFreeSpins(remaining);
       },
+      this.characterController.handleSpinResolved,
+      this.characterController.handleBonusEntered,
     );
   }
 

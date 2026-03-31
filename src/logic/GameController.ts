@@ -16,6 +16,11 @@ export class GameController {
     private readonly reels: ReelsPort,
     private readonly config: GameConfig,
     private readonly onFreeSpinsChange?: (remaining: number | null) => void,
+    private readonly onSpinResolved?: (result: {
+      totalWin: number;
+      hasWin: boolean;
+    }) => void,
+    private readonly onBonusEntered?: () => void,
   ) {
     // Initial internal state setup.
     this.state = {
@@ -195,6 +200,7 @@ export class GameController {
     this.updateFeatureView();
     this.clearForceStops();
     this.animateWins(wins);
+    this.onSpinResolved?.({ totalWin, hasWin: totalWin > 0 });
   }
 
   /**
@@ -237,6 +243,7 @@ export class GameController {
       { type: 'FREE_SPINS_AWARDED', count: award },
       this.config,
     );
+    this.onBonusEntered?.();
   }
 
   /**
