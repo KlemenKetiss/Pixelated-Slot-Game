@@ -13,9 +13,11 @@
     --border: #2e2e38;
     --text-primary: #e8e8ed;
     --text-muted: #9a9aa8;
-    --accent: #14266b;
-    --accent-hover: #1e317c;
-    --accent-active: #131f50;
+    --accent: #8b5cf6;
+    --accent-hover: #7c3aed;
+    --accent-active: #6d28d9;
+    --spin-text: #f8fafc;
+    --spin-glow: rgba(139, 92, 246, 0.4);
     --radius: 10px;
     --shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
 }
@@ -39,7 +41,7 @@ body {
     min-height: 100vh;
     background: var(--bg-primary);
     color: var(--text-primary);
-    font-family: 'Pixelify Sans', system-ui, -apple-system, sans-serif;
+    font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -109,7 +111,7 @@ canvas {
 }
 
 .btn {
-    font-family: inherit;
+    font-family: 'Orbitron', 'Inter', system-ui, sans-serif;
     font-size: 1.25rem;
     font-weight: 700;
     letter-spacing: 0.08em;
@@ -127,8 +129,8 @@ canvas {
     flex-shrink: 0;
     padding: 0.75rem 2.5rem;
     background: var(--accent);
-    color: #38db83;
-    box-shadow: 0 4px 14px rgba(99, 102, 241, 0.35);
+    color: var(--spin-text);
+    box-shadow: 0 4px 14px var(--spin-glow);
 }
 
 .btn-spin:hover:not(:disabled) {
@@ -216,7 +218,7 @@ canvas {
 .btn-force.selected {
     background: var(--accent);
     border-color: var(--accent);
-    color: #38db83;
+    color: var(--spin-text);
 }
 
 @media (orientation: landscape) {

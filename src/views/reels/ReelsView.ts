@@ -229,23 +229,6 @@ export class ReelsView extends Container {
     });
   }
 
-  public checkBonusCondition(): void {
-    let bonusCount = 0;
-    this.stops.forEach((reel) => {
-      reel.forEach((symbol) => {
-        if (symbol === 'BONUS') {
-          bonusCount++;
-        }
-      });
-    });
-
-    if (bonusCount >= REELS_CONFIG.bonusSymbolThreshold) {
-      this.setGameMode(GameMode.BONUS);
-    } else {
-      this.setGameMode(GameMode.NORMAL);
-    }
-  }
-
   public dispose(): void {
     this.reelViews.forEach((reelView) => {
       reelView.dispose();

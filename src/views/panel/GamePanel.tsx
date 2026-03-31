@@ -1,19 +1,12 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useBetHold } from '../../hooks/useBetHold';
 import { formatPanelAmount } from '../../utils/panelFormat';
+import { FORCE_OUTCOME_LABELS } from '../../utils/config';
 import {
   ReactPanelAdapter,
   createDefaultPanelDisplayState,
   type PanelDisplayState,
 } from './ReactPanelAdapter';
-
-const FORCE_OUTCOME_BUTTONS: ReadonlyArray<{ index: number; label: string }> =
-  [
-    { index: 0, label: 'High win' },
-    { index: 1, label: 'Bonus' },
-    { index: 2, label: 'Card ways' },
-    { index: 3, label: 'No win' },
-  ];
 
 export type GamePanelProps = {
   adapter: ReactPanelAdapter;
@@ -113,7 +106,7 @@ export function GamePanel({ adapter, onAdapterConnected }: GamePanelProps) {
       <section className="force-outcomes">
         <span className="force-outcomes-label">Force outcomes:</span>
         <div className="force-buttons">
-          {FORCE_OUTCOME_BUTTONS.map(({ index, label }) => (
+          {FORCE_OUTCOME_LABELS.map((label, index) => (
             <button
               key={index}
               type="button"

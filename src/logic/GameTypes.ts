@@ -14,7 +14,6 @@ export interface ReelsPort {
   /** Current visible symbols on each reel (left → right, top → bottom). */
   getStops(): string[][];
   playWinAnimations(reel: number, row: number): void;
-  checkBonusCondition(): void;
   clearWinAnimations(): void;
   getNumberOfReels(): number;
   /** Optional externally forced stops for debug / scripted spins. */

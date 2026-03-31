@@ -1,8 +1,13 @@
 import { SpineModel } from '../../spine/SpineModel';
 import { SpineView } from '../spine/SpineView';
-import { GAME_HEIGHT, GAME_WIDTH } from '../../utils/config';
-
-const TARGET_HEIGHT = 420;
+import {
+  CHARACTER_FALLBACK_SKELETON_HEIGHT,
+  CHARACTER_TARGET_HEIGHT,
+  CHARACTER_X_RATIO,
+  CHARACTER_Y_RATIO,
+  GAME_HEIGHT,
+  GAME_WIDTH,
+} from '../../utils/config';
 const SPINE_ALIASES = {
   skeleton: 'CharacterSkeleton',
   atlas: 'CharacterAtlas',
@@ -28,10 +33,11 @@ export class CharacterSpineView extends SpineView {
 
   private layoutSpine(): void {
     const data = this.spine.skeleton.data;
-    const h = data.height > 0 ? data.height : 617;
-    const scale = TARGET_HEIGHT / h;
+    const h =
+      data.height > 0 ? data.height : CHARACTER_FALLBACK_SKELETON_HEIGHT;
+    const scale = CHARACTER_TARGET_HEIGHT / h;
     this.spine.scale.set(scale);
-    this.x = GAME_WIDTH * 0.18;
-    this.y = GAME_HEIGHT * 0.82;
+    this.x = GAME_WIDTH * CHARACTER_X_RATIO;
+    this.y = GAME_HEIGHT * CHARACTER_Y_RATIO;
   }
 }

@@ -1,5 +1,6 @@
 import { Container, Graphics, Text } from 'pixi.js';
 import {
+  FEATURE_HIDDEN_VALUE,
   GAME_WIDTH,
   GAME_HEIGHT,
   FEATURE_VIEW_X_OFFSET,
@@ -108,10 +109,10 @@ export class FeatureView extends Container {
 
   /**
    * Updates the free spins display.
-   * @param remaining Number of free spins remaining.
+   * @param remaining Number of free spins remaining, or null when hidden.
    */
-  public setFreeSpins(remaining: number): void {
-    if (remaining < 0) {
+  public setFreeSpins(remaining: number | null): void {
+    if (remaining === FEATURE_HIDDEN_VALUE) {
       this.visible = false;
       this.counterText.text = '';
       return;

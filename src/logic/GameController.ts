@@ -15,7 +15,7 @@ export class GameController {
     private readonly panel: PanelPort,
     private readonly reels: ReelsPort,
     private readonly config: GameConfig,
-    private readonly onFreeSpinsChange?: (remaining: number) => void,
+    private readonly onFreeSpinsChange?: (remaining: number | null) => void,
   ) {
     // Initial internal state setup.
     this.state = {
@@ -214,9 +214,6 @@ export class GameController {
    * Also updates reels game mode to reflect bonus status.
    */
   private handleBonusCondition(stops: string[][]): void {
-    // Informs reels view to set appropriate GameMode (bonus visually).
-    this.reels.checkBonusCondition();
-
     // Tally the number of "BONUS" symbols on screen.
     let bonusCount = 0;
     stops.forEach((reel) => {
@@ -272,13 +269,12 @@ export class GameController {
 
   /**
    * If onFreeSpinsChange callback is supplied: call it with free spins remaining,
-   * or -1 when the player is not in a free spins session.
+   * or null when the player is not in a free spins session.
    */
   private updateFeatureView(): void {
     if (!this.onFreeSpinsChange) return;
     const { freeSpinsActive, freeSpinsLeft } = this.state;
-    // When not in free spins mode, -1 signals view to turn off the feature display.
-    const remaining = freeSpinsActive ? freeSpinsLeft : -1;
+    const remaining = freeSpinsActive ? freeSpinsLeft : null;
     this.onFreeSpinsChange(remaining);
   }
 

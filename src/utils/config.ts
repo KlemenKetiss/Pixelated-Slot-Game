@@ -72,12 +72,21 @@ export const SYMBOL_WIN_DIMMED_ALPHA = 0.5;
 export const INITIAL_WIN = 0;
 
 // Win field (Pixi overlay) layout and typography
-export const WIN_FIELD_FONT_SIZE = 120;
+export const WIN_FIELD_FONT_SIZE = 100;
 export const WIN_FIELD_INITIAL_TEXT = '0';
-export const WIN_FIELD_TEXT_Y_OFFSET = 30;
+export const WIN_FIELD_TEXT_Y_OFFSET = 15;
 export const WIN_FIELD_BOTTOM_OFFSET = 300;
 export const WIN_FIELD_HORIZONTAL_OFFSET = 750;
 export const WIN_FIELD_TEXT_COLOR = 0xffffff;
+export const WIN_FIELD_SPRITE_SCALE = 1;
+export const WIN_FIELD_STROKE_COLOR = 0x111827;
+export const WIN_FIELD_STROKE_WIDTH = 8;
+export const WIN_FIELD_DROP_SHADOW_COLOR = 0x000000;
+export const WIN_FIELD_DROP_SHADOW_ALPHA = 0.35;
+export const WIN_FIELD_DROP_SHADOW_ANGLE = Math.PI / 4;
+export const WIN_FIELD_DROP_SHADOW_DISTANCE = 4;
+export const WIN_FIELD_DROP_SHADOW_BLUR = 0;
+export const WIN_FIELD_LETTER_SPACING = 1.5;
 
 // Feature view (free spins overlay) layout and styling
 export const FEATURE_VIEW_X_OFFSET = 740;
@@ -91,6 +100,13 @@ export const FEATURE_TITLE_FONT_SIZE = 48;
 export const FEATURE_COUNTER_FONT_SIZE = 80;
 export const FEATURE_TITLE_COLOR = 0xfff176;
 export const FEATURE_COUNTER_COLOR = 0xffffff;
+export const FEATURE_HIDDEN_VALUE: null = null;
+
+// Character spine layout tuning
+export const CHARACTER_TARGET_HEIGHT = 420;
+export const CHARACTER_FALLBACK_SKELETON_HEIGHT = 617;
+export const CHARACTER_X_RATIO = 0.18;
+export const CHARACTER_Y_RATIO = 0.82;
 
 // Symbol view fallback + win animation tuning
 export const SYMBOL_FALLBACK_CORNER_RADIUS = 16;
@@ -128,9 +144,9 @@ export const SYMBOLS: string[] = [
 /** Relative pick weights (same order as SYMBOLS). Higher = more common on reels. */
 export const SYMBOL_WEIGHTS: number[] = [
   // Royals / low payers
-  24, 24, 24, 24, 24, 24,
+  30, 30, 30, 30, 30, 30,
   // Mids M1–M6 (descending)
-  18, 16, 14, 12, 10, 8,
+  24, 22, 20, 18, 16, 14,
   // High tiers H1–H3
   7, 6, 5,
   // Premiums H4–H6
@@ -173,6 +189,13 @@ export const FORCE_STOP_SETS: Array<Array<Array<string>>> = [
     ['M4', 'M5', 'M6'],
     ['H1', 'H2', 'H3'],
   ],
+];
+
+export const FORCE_OUTCOME_LABELS: ReadonlyArray<string> = [
+  'High win',
+  'Bonus',
+  'Medium win',
+  'No win',
 ];
 
 // Payouts per symbol and matches; values are per-way multipliers.

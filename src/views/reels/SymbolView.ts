@@ -31,7 +31,10 @@ export class SymbolView extends Container {
     try {
       this._symbolName = symbolName;
       const baseTexture = Assets.get(symbolName);
-      const connectTexture = Assets.get(`${symbolName}_connect`);
+      const shouldUseConnectVariant = symbolName !== 'BONUS';
+      const connectTexture = shouldUseConnectVariant
+        ? Assets.get(`${symbolName}_connect`)
+        : undefined;
       this.hasConnectTexture = Boolean(connectTexture);
       if (baseTexture) {
         this.symbolTexture = new Sprite(baseTexture);
@@ -115,7 +118,7 @@ export class SymbolView extends Container {
         yoyo: true,
         ease: 'sine.inOut',
         alpha: SYMBOL_WIN_DIMMED_ALPHA,
-        x: this.symbolTexture.x + SYMBOL_WIN_ANIMATION_CONFIG.shakeOffsetX,
+        //x: this.symbolTexture.x + SYMBOL_WIN_ANIMATION_CONFIG.shakeOffsetX,
       });
     }
   }
