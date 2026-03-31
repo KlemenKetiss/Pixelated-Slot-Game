@@ -74,7 +74,7 @@ export const INITIAL_WIN = 0;
 // Win field (Pixi overlay) layout and typography
 export const WIN_FIELD_FONT_SIZE = 120;
 export const WIN_FIELD_INITIAL_TEXT = '0';
-export const WIN_FIELD_TEXT_Y_OFFSET = 50;
+export const WIN_FIELD_TEXT_Y_OFFSET = 30;
 export const WIN_FIELD_BOTTOM_OFFSET = 300;
 export const WIN_FIELD_HORIZONTAL_OFFSET = 750;
 export const WIN_FIELD_TEXT_COLOR = 0xffffff;
@@ -125,6 +125,20 @@ export const SYMBOLS: string[] = [
   'BONUS',
 ];
 
+/** Relative pick weights (same order as SYMBOLS). Higher = more common on reels. */
+export const SYMBOL_WEIGHTS: number[] = [
+  // Royals / low payers
+  24, 24, 24, 24, 24, 24,
+  // Mids M1–M6 (descending)
+  18, 16, 14, 12, 10, 8,
+  // High tiers H1–H3
+  7, 6, 5,
+  // Premiums H4–H6
+  3, 2, 2,
+  // Feature (kept rarer than mids; ReelsView still caps one BONUS per reel)
+  3,
+];
+
 // Forced outcomes aligned with the new symbol set.
 export const FORCE_STOP_SETS: Array<Array<Array<string>>> = [
   // High win: many H6 symbols across all reels.
@@ -163,24 +177,24 @@ export const FORCE_STOP_SETS: Array<Array<Array<string>>> = [
 
 // Payouts per symbol and matches; values are per-way multipliers.
 export const SYMBOL_PAYOUTS: { [key: string]: { [matches: number]: number } } = {
-  '9': { 3: 2 },
-  '10': { 3: 2.5 },
-  J: { 3: 3 },
-  Q: { 3: 3.5 },
-  K: { 3: 4 },
-  A: { 3: 5 },
-  M1: { 3: 6 },
-  M2: { 3: 7 },
-  M3: { 3: 8 },
-  M4: { 3: 9 },
-  M5: { 3: 10 },
-  M6: { 3: 12 },
-  H1: { 3: 14 },
-  H2: { 3: 16 },
-  H3: { 3: 18 },
-  H4: { 3: 20 },
-  H5: { 3: 24 },
-  H6: { 3: 30 },
-  BONUS: { 3: 0 },
+  '9': { 3: 2, 4: 4, 5: 8 },
+  '10': { 3: 2.5, 4: 5, 5: 10 },
+  J: { 3: 3, 4: 6, 5: 12 },
+  Q: { 3: 3.5, 4: 7, 5: 14 },
+  K: { 3: 4, 4: 8, 5: 16 },
+  A: { 3: 5, 4: 10, 5: 20 },
+  M1: { 3: 6, 4: 12, 5: 24 },
+  M2: { 3: 7, 4: 14, 5: 28 },
+  M3: { 3: 8, 4: 16, 5: 32 },
+  M4: { 3: 9, 4: 18, 5: 36 },
+  M5: { 3: 10, 4: 20, 5: 40 },
+  M6: { 3: 12, 4: 24, 5: 48 },
+  H1: { 3: 14, 4: 28, 5: 56 },
+  H2: { 3: 16, 4: 32, 5: 64 },
+  H3: { 3: 18, 4: 36, 5: 72 },
+  H4: { 3: 20, 4: 40, 5: 80 },
+  H5: { 3: 24, 4: 48, 5: 96 },
+  H6: { 3: 30, 4: 60, 5: 120 },
+  BONUS: { 3: 0, 4: 0, 5: 0 },
 };
 
